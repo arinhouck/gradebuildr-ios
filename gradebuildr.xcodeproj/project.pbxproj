@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3FFDF1FA41803B3D4EFF57B6 /* Pods_gradebuildr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087FE460E0F2B654EDB2CA8D /* Pods_gradebuildr.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		F7086B7E1B8A24C7000FEB16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7086B7D1B8A24C7000FEB16 /* AppDelegate.swift */; };
-		F7086B801B8A24C7000FEB16 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7086B7F1B8A24C7000FEB16 /* ViewController.swift */; };
-		F7086B831B8A24C7000FEB16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7086B811B8A24C7000FEB16 /* Main.storyboard */; };
-		F7086B851B8A24C7000FEB16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7086B841B8A24C7000FEB16 /* Images.xcassets */; };
 		F7086B941B8A24C7000FEB16 /* gradebuildrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7086B931B8A24C7000FEB16 /* gradebuildrTests.swift */; };
-		F7E1C5E51B8A4E0A00D8397B /* UIView_Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E1C5E41B8A4E0A00D8397B /* UIView_Borders.swift */; };
-		F7E1C5E71B8A64EF00D8397B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E1C5E61B8A64EF00D8397B /* LoginController.swift */; };
+		F769CE4B1B8B115C0092F8C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7086B7D1B8A24C7000FEB16 /* AppDelegate.swift */; };
+		F769CE4C1B8B115E0092F8C6 /* UIView_Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E1C5E41B8A4E0A00D8397B /* UIView_Borders.swift */; };
+		F769CE4E1B8B11690092F8C6 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E1C5E61B8A64EF00D8397B /* LoginController.swift */; };
+		F769CE4F1B8B11740092F8C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7086B811B8A24C7000FEB16 /* Main.storyboard */; };
+		F7F407381B8B120600934994 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7086B841B8A24C7000FEB16 /* Images.xcassets */; };
+		F7F4073C1B8B1ADF00934994 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F4073B1B8B1ADF00934994 /* DashboardController.swift */; };
+		F7F4073E1B8B1D9000934994 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F4073D1B8B1D9000934994 /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +35,6 @@
 		F7086B781B8A24C7000FEB16 /* gradebuildr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gradebuildr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7086B7C1B8A24C7000FEB16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7086B7D1B8A24C7000FEB16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F7086B7F1B8A24C7000FEB16 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F7086B821B8A24C7000FEB16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F7086B841B8A24C7000FEB16 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F7086B8D1B8A24C7000FEB16 /* gradebuildrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gradebuildrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +42,8 @@
 		F7086B931B8A24C7000FEB16 /* gradebuildrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gradebuildrTests.swift; sourceTree = "<group>"; };
 		F7E1C5E41B8A4E0A00D8397B /* UIView_Borders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Borders.swift; sourceTree = "<group>"; };
 		F7E1C5E61B8A64EF00D8397B /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		F7F4073B1B8B1ADF00934994 /* DashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
+		F7F4073D1B8B1D9000934994 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +106,9 @@
 			isa = PBXGroup;
 			children = (
 				F7086B7D1B8A24C7000FEB16 /* AppDelegate.swift */,
+				F7F4073B1B8B1ADF00934994 /* DashboardController.swift */,
+				F7F4073D1B8B1D9000934994 /* HomeController.swift */,
 				F7E1C5E41B8A4E0A00D8397B /* UIView_Borders.swift */,
-				F7086B7F1B8A24C7000FEB16 /* ViewController.swift */,
 				F7E1C5E61B8A64EF00D8397B /* LoginController.swift */,
 				F7086B811B8A24C7000FEB16 /* Main.storyboard */,
 				F7086B841B8A24C7000FEB16 /* Images.xcassets */,
@@ -222,8 +225,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7086B831B8A24C7000FEB16 /* Main.storyboard in Resources */,
-				F7086B851B8A24C7000FEB16 /* Images.xcassets in Resources */,
+				F7F407381B8B120600934994 /* Images.xcassets in Resources */,
+				F769CE4F1B8B11740092F8C6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,10 +292,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7086B801B8A24C7000FEB16 /* ViewController.swift in Sources */,
-				F7E1C5E71B8A64EF00D8397B /* LoginController.swift in Sources */,
-				F7086B7E1B8A24C7000FEB16 /* AppDelegate.swift in Sources */,
-				F7E1C5E51B8A4E0A00D8397B /* UIView_Borders.swift in Sources */,
+				F769CE4E1B8B11690092F8C6 /* LoginController.swift in Sources */,
+				F769CE4B1B8B115C0092F8C6 /* AppDelegate.swift in Sources */,
+				F7F4073E1B8B1D9000934994 /* HomeController.swift in Sources */,
+				F7F4073C1B8B1ADF00934994 /* DashboardController.swift in Sources */,
+				F769CE4C1B8B115E0092F8C6 /* UIView_Borders.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +419,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = gradebuildr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -427,6 +432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = gradebuildr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -449,6 +455,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gradebuildr.app/gradebuildr";
+				"TEST_HOST[sdk=*]" = "";
 			};
 			name = Debug;
 		};
@@ -464,6 +471,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gradebuildr.app/gradebuildr";
+				"TEST_HOST[sdk=*]" = "";
 			};
 			name = Release;
 		};

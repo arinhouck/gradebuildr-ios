@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import Alamofire
+import SwiftyJSON
+import KeychainAccess
 
 let API_URL = "http://localhost:3000/"
 
@@ -54,12 +56,31 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 if (response?.statusCode == 201) {
                     // Sucessful request
                     self.alert("Login", message: "\(response)", buttonText: "Okay")
+                    self.storeKeychain(string!)
+                    self.updateUserLoggedInFlag()
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 } else {
                     // Unauthorized Request
                     self.alert("Login", message: "Invalid email or password.", buttonText: "Okay")
                 }
                 
         }
+    }
+    
+    private func storeKeychain(jsonResponse: String) {
+        let keychain = Keychain(service: "Gradebuildr")
+        
+        if let dataFromString = jsonResponse.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            let json = JSON(data: dataFromString)
+            keychain[string: self.email.text] = json["token"].string
+        }
+    }
+    
+    func updateUserLoggedInFlag() {
+        // Update the NSUserDefaults flag
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject("loggedIn", forKey: "userLoggedIn")
+        defaults.synchronize()
     }
     
     private func alert(title: String, message: String, buttonText: String) {
