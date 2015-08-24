@@ -28,6 +28,12 @@ class LoginController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func login(sender : UIButton){
+        
+        if (email.text.isEmpty || password.text.isEmpty) { // Validation for email and password
+            self.alert("Login", message: "Please enter an email and password.", buttonText: "Okay")
+            return
+        }
+        
         let headers = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
@@ -45,12 +51,23 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 println(request)
                 println(response)
                 println(string)
-                var alertView = UIAlertView();
-                alertView.addButtonWithTitle("Ok")
-                alertView.title = "Login"
-                alertView.message = "\(response)"
-                alertView.show()
+                if (response?.statusCode == 201) {
+                    // Sucessful request
+                    self.alert("Login", message: "\(response)", buttonText: "Okay")
+                } else {
+                    // Unauthorized Request
+                    self.alert("Login", message: "Invalid email or password.", buttonText: "Okay")
+                }
+                
         }
+    }
+    
+    private func alert(title: String, message: String, buttonText: String) {
+        var alertView = UIAlertView();
+        alertView.title = title
+        alertView.message = message
+        alertView.addButtonWithTitle(buttonText)
+        alertView.show()
     }
     
     
