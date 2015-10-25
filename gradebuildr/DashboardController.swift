@@ -22,8 +22,7 @@ class DashboardController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func logout(sender: AnyObject) {
-        
+    private func logout() {
         do {
             try keychain.remove("user-token")
         } catch let error {
@@ -33,8 +32,12 @@ class DashboardController: UIViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("userLoggedIn")
+    }
+    
+    @IBAction func logout(sender: AnyObject) {
+        self.logout()
         
-        self.performSegueWithIdentifier("root", sender: nil)
+        self.performSegueWithIdentifier("logout", sender: self)
     }
         
 }

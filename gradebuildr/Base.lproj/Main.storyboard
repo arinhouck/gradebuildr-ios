@@ -5,21 +5,24 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Item-->
         <scene sceneID="ypp-J4-tcS">
             <objects>
                 <navigationController hidesBottomBarWhenPushed="YES" navigationBarHidden="YES" id="27A-FR-T0g" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="9cs-jf-rmw"/>
                     <navigationItem key="navigationItem" id="EkB-9a-ofU"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vkk-f2-00e">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="l3r-PY-CSS">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="RZ6-iK-voc"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="hl3-3g-nNh"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lf7-Ns-psg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -44,7 +47,7 @@
                                     <constraint firstAttribute="height" constant="188" id="O3x-EN-Vie"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6Q-Or-nX5">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6Q-Or-nX5">
                                 <rect key="frame" x="50" y="452" width="120" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="7eO-DV-af2"/>
@@ -59,7 +62,7 @@
                                     <segue destination="qF9-Cu-bLL" kind="push" id="E6F-OF-5k4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M08-xG-0u3">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M08-xG-0u3">
                                 <rect key="frame" x="196" y="451" width="65" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="XJN-RJ-u9i"/>
@@ -96,7 +99,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eLD-oW-CfJ"/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -179,7 +181,7 @@
                                     <navigationItem title="Gradebuildr" id="eq2-cm-YM2">
                                         <barButtonItem key="rightBarButtonItem" title="Log out" id="KAM-pk-keR">
                                             <connections>
-                                                <action selector="logout:" destination="ZCu-qa-KbO" id="K67-0X-TbF"/>
+                                                <action selector="logout:" destination="ZCu-qa-KbO" id="cPH-vJ-2CD"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -196,7 +198,7 @@
                     <tabBarItem key="tabBarItem" title="Dashboard" image="dashboard" id="Lhs-VR-lvY"/>
                     <navigationItem key="navigationItem" id="E0G-YM-LG0"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="push" identifier="root" id="ukx-n6-it4"/>
+                        <segue destination="BYZ-38-t0r" kind="push" identifier="logout" id="pH8-j5-2Ls"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LPw-dH-3dP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -206,7 +208,7 @@
         <!--Login-->
         <scene sceneID="Fv3-Sb-bHK">
             <objects>
-                <viewController title="Login" id="qF9-Cu-bLL" customClass="LoginController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Login" hidesBottomBarWhenPushed="YES" id="qF9-Cu-bLL" customClass="LoginController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YfU-bg-MGG"/>
                         <viewControllerLayoutGuide type="bottom" id="luc-ao-5oZ"/>
@@ -215,11 +217,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08p-te-gDK">
-                                <rect key="frame" x="83" y="532" width="153" height="100"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eda-zx-UBX">
+                                <rect key="frame" x="48" y="318" width="225" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="sga-aO-ecA"/>
+                                    <constraint firstAttribute="height" constant="50" id="TEj-lx-6MO"/>
                                 </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bfc-Uq-6ei">
+                                <rect key="frame" x="48" y="200" width="225" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="lTl-8t-qdH"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08p-te-gDK">
+                                <rect key="frame" x="84" y="448" width="153" height="100"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="64"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -229,45 +246,26 @@
                                     <action selector="login:" destination="qF9-Cu-bLL" eventType="touchUpInside" id="7yF-Gf-Lsk"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eda-zx-UBX">
-                                <rect key="frame" x="47" y="333" width="225" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="tXz-94-yoX"/>
-                                </constraints>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bfc-Uq-6ei">
-                                <rect key="frame" x="47" y="201" width="225" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="A8p-NO-TSO"/>
-                                </constraints>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.65098039220000004" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="luc-ao-5oZ" firstAttribute="top" secondItem="08p-te-gDK" secondAttribute="bottom" constant="35" id="G1v-kM-Wj4"/>
-                            <constraint firstItem="Eda-zx-UBX" firstAttribute="centerX" secondItem="H5z-ai-Wae" secondAttribute="centerX" id="P55-jH-Sn6"/>
-                            <constraint firstItem="08p-te-gDK" firstAttribute="leading" secondItem="H5z-ai-Wae" secondAttribute="leadingMargin" constant="67" id="UBW-WD-Ra4"/>
-                            <constraint firstItem="Bfc-Uq-6ei" firstAttribute="leading" secondItem="H5z-ai-Wae" secondAttribute="leadingMargin" constant="31" id="dl1-1X-19x"/>
-                            <constraint firstItem="08p-te-gDK" firstAttribute="centerX" secondItem="Eda-zx-UBX" secondAttribute="centerX" id="oRp-uC-zxr"/>
-                            <constraint firstItem="Eda-zx-UBX" firstAttribute="trailing" secondItem="Bfc-Uq-6ei" secondAttribute="trailing" id="slS-VF-Eh9"/>
-                            <constraint firstItem="Eda-zx-UBX" firstAttribute="top" secondItem="Bfc-Uq-6ei" secondAttribute="bottom" constant="82" id="uQS-eJ-eBZ"/>
-                            <constraint firstItem="Bfc-Uq-6ei" firstAttribute="top" secondItem="YfU-bg-MGG" secondAttribute="bottom" constant="181" id="ukF-Ev-PD2"/>
-                            <constraint firstItem="Eda-zx-UBX" firstAttribute="leading" secondItem="Bfc-Uq-6ei" secondAttribute="leading" id="uok-zv-dEN"/>
+                            <constraint firstItem="Eda-zx-UBX" firstAttribute="centerX" secondItem="08p-te-gDK" secondAttribute="centerX" id="N8Z-3z-KAq"/>
+                            <constraint firstItem="08p-te-gDK" firstAttribute="top" secondItem="Eda-zx-UBX" secondAttribute="bottom" constant="80" id="XyY-D7-aK5"/>
+                            <constraint firstItem="Bfc-Uq-6ei" firstAttribute="leading" secondItem="Eda-zx-UBX" secondAttribute="leading" id="h9s-0M-4a4"/>
+                            <constraint firstItem="Bfc-Uq-6ei" firstAttribute="leading" secondItem="H5z-ai-Wae" secondAttribute="leadingMargin" constant="32" id="lje-v4-pJ9"/>
+                            <constraint firstItem="Eda-zx-UBX" firstAttribute="trailing" secondItem="Bfc-Uq-6ei" secondAttribute="trailing" id="tdw-tT-IHg"/>
+                            <constraint firstItem="Eda-zx-UBX" firstAttribute="top" secondItem="Bfc-Uq-6ei" secondAttribute="bottom" constant="68" id="u7o-Ex-MlG"/>
+                            <constraint firstItem="Eda-zx-UBX" firstAttribute="centerX" secondItem="H5z-ai-Wae" secondAttribute="centerX" id="usG-Tw-BbZ"/>
+                            <constraint firstItem="Bfc-Uq-6ei" firstAttribute="top" secondItem="YfU-bg-MGG" secondAttribute="bottom" constant="180" id="y9Y-5P-jjt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VVN-Vd-gNC"/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="email" destination="Bfc-Uq-6ei" id="RX7-Kx-5Rs"/>
                         <outlet property="password" destination="Eda-zx-UBX" id="dlh-vO-sQH"/>
+                        <outlet property="swipeView" destination="H5z-ai-Wae" id="Q2s-rc-MCC"/>
                         <segue destination="odr-N1-uWd" kind="push" identifier="dashboard" id="Rde-vX-Buf"/>
                     </connections>
                 </viewController>
@@ -283,6 +281,6 @@
         <image name="grades" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="RZ6-iK-voc"/>
+        <segue reference="pH8-j5-2Ls"/>
     </inferredMetricsTieBreakers>
 </document>

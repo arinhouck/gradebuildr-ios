@@ -19,14 +19,39 @@ class LoginController: UIViewController, UITextFieldDelegate {
     @IBOutlet var email: UITextField!
     @IBOutlet var password: UITextField!
     
+    @IBOutlet var swipeView: UIView!
+    
+    let swipeRec = UISwipeGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+        swipeRec.addTarget(self, action: "swipedView")
+        swipeView.addGestureRecognizer(swipeRec)
+        swipeView.userInteractionEnabled = true
+
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func swipedView(){
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func keyboardWillShow(notification: NSNotification) {
+        self.view.frame.origin.y -= 150
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y += 150
     }
     
     @IBAction func login(sender : UIButton){
