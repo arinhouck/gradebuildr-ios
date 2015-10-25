@@ -13,8 +13,20 @@ class DashboardController: UIViewController {
     
     let keychain = Keychain(service: "com.gradebuildr.user-token")
     
+    @IBOutlet var mainView: UIView!
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let view = UIView(frame:
+            CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0)
+        )
+        view.backgroundColor = UIColor(red:0.00, green:0.66, blue:0.40, alpha:1.0)
+        
+        self.view.addSubview(view)
     }
     
     override func didReceiveMemoryWarning() {

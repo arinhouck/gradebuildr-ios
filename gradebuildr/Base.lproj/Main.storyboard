@@ -151,7 +151,11 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="YmK-IM-0Zg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.0" green="0.65098039215686276" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="ZCu-qa-KbO" kind="relationship" relationship="viewControllers" id="o1j-FZ-rDe"/>
@@ -176,7 +180,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qxb-JM-qLw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.65098039220000004" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="barTintColor" red="0.0" green="0.65098039215686276" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Gradebuildr" id="eq2-cm-YM2">
                                         <barButtonItem key="rightBarButtonItem" title="Log out" id="KAM-pk-keR">
@@ -191,13 +201,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Qxb-JM-qLw" firstAttribute="leading" secondItem="VZO-g1-gE2" secondAttribute="leading" id="7Kf-mm-SuD"/>
-                            <constraint firstItem="Qxb-JM-qLw" firstAttribute="top" secondItem="VZO-g1-gE2" secondAttribute="top" id="YLy-KU-emH"/>
+                            <constraint firstItem="Qxb-JM-qLw" firstAttribute="top" secondItem="InG-I1-8bs" secondAttribute="bottom" id="UNe-mf-2ME"/>
                             <constraint firstAttribute="trailing" secondItem="Qxb-JM-qLw" secondAttribute="trailing" id="owb-xc-njq"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="dashboard" id="Lhs-VR-lvY"/>
                     <navigationItem key="navigationItem" id="E0G-YM-LG0"/>
                     <connections>
+                        <outlet property="mainView" destination="VZO-g1-gE2" id="q7U-mu-5OG"/>
                         <segue destination="BYZ-38-t0r" kind="push" identifier="logout" id="pH8-j5-2Ls"/>
                     </connections>
                 </viewController>
@@ -283,4 +294,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="pH8-j5-2Ls"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.0" green="0.65098039220000004" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>

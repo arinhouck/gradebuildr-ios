@@ -23,6 +23,8 @@ class LoginController: UIViewController, UITextFieldDelegate {
     
     let swipeRec = UISwipeGestureRecognizer()
     
+    var keyboardMoved = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -46,12 +48,16 @@ class LoginController: UIViewController, UITextFieldDelegate {
     
     
     func keyboardWillShow(notification: NSNotification) {
-        self.view.frame.origin.y -= 150
+        if !keyboardMoved {
+            self.view.frame.origin.y -= 150
+            keyboardMoved = true
+        }
         
     }
     
     func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y += 150
+        keyboardMoved = false
     }
     
     @IBAction func login(sender : UIButton){
