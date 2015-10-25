@@ -17,7 +17,7 @@ class HomeController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         if defaults.objectForKey("userLoggedIn") != nil {
-            if let dashboard = self.storyboard?.instantiateViewControllerWithIdentifier("DashboardController") as? DashboardController {
+            if let dashboard = self.storyboard?.instantiateViewControllerWithIdentifier("tabBar") as? TabBarController {
                 self.navigationController?.presentViewController(dashboard, animated: true, completion: nil)
             }
         }

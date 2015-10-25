@@ -1,13 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
-
-
 target 'gradebuildr' do
-    pod 'Alamofire', '~> 1.3'
-    pod 'SwiftyJSON', '~> 2.2.1'
-    pod 'KeychainAccess'
+    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'KeychainAccess', :git => 'https://github.com/kishikawakatsumi/KeychainAccess.git'
 end
 
 target 'gradebuildrTests' do

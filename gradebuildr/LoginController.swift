@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 import KeychainAccess
 
-let API_URL = "http://localhost:3000/"
+let API_URL = "https://www.gradebuildr.com/"
 
 class LoginController: UIViewController, UITextFieldDelegate {
     
@@ -31,7 +31,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
     
     @IBAction func login(sender : UIButton){
         
-        if (email.text.isEmpty || password.text.isEmpty) { // Validation for email and password
+        if (email.text!.isEmpty || password.text!.isEmpty) { // Validation for email and password
             self.alert("Login", message: "Please enter an email and password.", buttonText: "Okay")
             return
         }
@@ -44,21 +44,21 @@ class LoginController: UIViewController, UITextFieldDelegate {
             .POST,
             API_URL + "users/sign_in",
             parameters: ["user":
-                ["email": email.text, "password": password.text]
+                ["email": email.text!, "password": password.text!]
             ],
             headers: headers,
             encoding: .JSON
-            ).responseString {
-                (request, response, string, error) in
-                println(request)
-                println(response)
-                println(string)
-                if (response?.statusCode == 201) {
+            ).responseString { response in
+                print(response.request)
+                print(response.response)
+                print(response.result.value)
+                
+                if (response.response?.statusCode == 201) {
                     // Sucessful request
                     self.alert("Login", message: "\(response)", buttonText: "Okay")
-                    self.storeKeychain(string!)
+                    self.storeKeychain(response.result.value!)
                     self.updateUserLoggedInFlag()
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.performSegueWithIdentifier("dashboard", sender: nil)
                 } else {
                     // Unauthorized Request
                     self.alert("Login", message: "Invalid email or password.", buttonText: "Okay")
@@ -67,12 +67,17 @@ class LoginController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
     private func storeKeychain(jsonResponse: String) {
-        let keychain = Keychain(service: "Gradebuildr")
+        let keychain = Keychain(service: "com.gradebuildr.user-token")
         
         if let dataFromString = jsonResponse.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             let json = JSON(data: dataFromString)
-            keychain[string: self.email.text] = json["token"].string
+            keychain[string: "user-token"] = json["token"].string
         }
     }
     

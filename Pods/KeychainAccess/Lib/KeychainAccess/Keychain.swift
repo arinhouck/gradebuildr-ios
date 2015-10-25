@@ -62,72 +62,221 @@ public enum AuthenticationType {
 }
 
 public enum Accessibility {
+    /**
+    Item data can only be accessed
+    while the device is unlocked. This is recommended for items that only
+    need be accesible while the application is in the foreground. Items
+    with this attribute will migrate to a new device when using encrypted
+    backups.
+    */
     case WhenUnlocked
+
+    /**
+    Item data can only be
+    accessed once the device has been unlocked after a restart. This is
+    recommended for items that need to be accesible by background
+    applications. Items with this attribute will migrate to a new device
+    when using encrypted backups.
+    */
     case AfterFirstUnlock
+
+    /**
+    Item data can always be accessed
+    regardless of the lock state of the device. This is not recommended
+    for anything except system use. Items with this attribute will migrate
+    to a new device when using encrypted backups.
+    */
     case Always
+
+    /**
+    Item data can
+    only be accessed while the device is unlocked. This class is only
+    available if a passcode is set on the device. This is recommended for
+    items that only need to be accessible while the application is in the
+    foreground. Items with this attribute will never migrate to a new
+    device, so after a backup is restored to a new device, these items
+    will be missing. No items can be stored in this class on devices
+    without a passcode. Disabling the device passcode will cause all
+    items in this class to be deleted.
+    */
+    @available(iOS 8.0, OSX 10.10, *)
     case WhenPasscodeSetThisDeviceOnly
+
+    /**
+    Item data can only
+    be accessed while the device is unlocked. This is recommended for items
+    that only need be accesible while the application is in the foreground.
+    Items with this attribute will never migrate to a new device, so after
+    a backup is restored to a new device, these items will be missing.
+    */
     case WhenUnlockedThisDeviceOnly
+
+    /**
+    Item data can
+    only be accessed once the device has been unlocked after a restart.
+    This is recommended for items that need to be accessible by background
+    applications. Items with this attribute will never migrate to a new
+    device, so after a backup is restored to a new device these items will
+    be missing.
+    */
     case AfterFirstUnlockThisDeviceOnly
+
+    /**
+    Item data can always
+    be accessed regardless of the lock state of the device. This option
+    is not recommended for anything except system use. Items with this
+    attribute will never migrate to a new device, so after a backup is
+    restored to a new device, these items will be missing.
+    */
     case AlwaysThisDeviceOnly
 }
 
-public enum AuthenticationPolicy : Int {
-    case UserPresence
+public struct AuthenticationPolicy : OptionSetType {
+    /**
+    User presence policy using Touch ID or Passcode. Touch ID does not 
+    have to be available or enrolled. Item is still accessible by Touch ID
+    even if fingers are added or removed.
+    */
+    @available(iOS 8.0, OSX 10.10, *)
+    @available(watchOS, unavailable)
+    public static let UserPresence = AuthenticationPolicy(rawValue: 1 << 0)
+
+    /**
+    Constraint: Touch ID (any finger). Touch ID must be available and 
+    at least one finger must be enrolled. Item is still accessible by 
+    Touch ID even if fingers are added or removed.
+    */
+    @available(iOS 9.0, *)
+    @available(OSX, unavailable)
+    @available(watchOS, unavailable)
+    public static let TouchIDAny = AuthenticationPolicy(rawValue: 1 << 1)
+
+    /**
+    Constraint: Touch ID from the set of currently enrolled fingers. 
+    Touch ID must be available and at least one finger must be enrolled. 
+    When fingers are added or removed, the item is invalidated.
+    */
+    @available(iOS 9.0, *)
+    @available(OSX, unavailable)
+    @available(watchOS, unavailable)
+    public static let TouchIDCurrentSet = AuthenticationPolicy(rawValue: 1 << 3)
+
+    /**
+    Constraint: Device passcode
+    */
+    @available(iOS 9.0, OSX 10.11, *)
+    @available(watchOS, unavailable)
+    public static let DevicePasscode = AuthenticationPolicy(rawValue: 1 << 4)
+
+    /**
+    Constraint logic operation: when using more than one constraint, 
+    at least one of them must be satisfied.
+    */
+    @available(iOS 9.0, *)
+    @available(OSX, unavailable)
+    @available(watchOS, unavailable)
+    public static let Or = AuthenticationPolicy(rawValue: 1 << 14)
+
+    /**
+    Constraint logic operation: when using more than one constraint,
+    all must be satisfied.
+    */
+    @available(iOS 9.0, *)
+    @available(OSX, unavailable)
+    @available(watchOS, unavailable)
+    public static let And = AuthenticationPolicy(rawValue: 1 << 15)
+
+    /**
+    Create access control for private key operations (i.e. sign operation)
+    */
+    @available(iOS 9.0, *)
+    @available(OSX, unavailable)
+    @available(watchOS, unavailable)
+    public static let PrivateKeyUsage = AuthenticationPolicy(rawValue: 1 << 30)
+
+    /**
+    Security: Application provided password for data encryption key generation.
+    This is not a constraint but additional item encryption mechanism.
+    */
+    @available(iOS 9.0, *)
+    @available(OSX, unavailable)
+    @available(watchOS, unavailable)
+    public static let ApplicationPassword = AuthenticationPolicy(rawValue: 1 << 31)
+
+    public let rawValue : Int
+
+    public init(rawValue:Int) {
+        self.rawValue = rawValue
+    }
 }
 
-public enum FailableOf<T> {
-    case Success(Value<T?>)
-    case Failure(NSError)
-    
-    init(_ value: T?) {
-        self = .Success(Value(value))
-    }
-    
-    init(_ error: NSError) {
-        self = .Failure(error)
-    }
-    
-    public var succeeded: Bool {
-        switch self {
-        case .Success:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    public var failed: Bool {
-        switch self {
-        case .Failure:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    public var error: NSError? {
-        switch self {
-        case .Failure(let error):
-            return error
-        default:
-            return nil
-        }
-    }
-    
-    public var value: T? {
-        switch self {
-        case .Success(let success):
-            return success.value
-        default:
-            return nil
-        }
-    }
-}
+/** Class Key Constant */
+private let Class = kSecClass as String
 
-public class Value<T> {
-    let value: T
-    init(_ value: T) { self.value = value }
-}
+/** Attribute Key Constants */
+private let AttributeAccessible = kSecAttrAccessible as String
+
+@available(iOS 8.0, OSX 10.10, *)
+private let AttributeAccessControl = kSecAttrAccessControl as String
+
+private let AttributeAccessGroup = kSecAttrAccessGroup as String
+private let AttributeSynchronizable = kSecAttrSynchronizable as String
+private let AttributeComment = kSecAttrComment as String
+private let AttributeLabel = kSecAttrLabel as String
+private let AttributeAccount = kSecAttrAccount as String
+private let AttributeService = kSecAttrService as String
+private let AttributeServer = kSecAttrServer as String
+private let AttributeProtocol = kSecAttrProtocol as String
+private let AttributeAuthenticationType = kSecAttrAuthenticationType as String
+private let AttributePort = kSecAttrPort as String
+
+private let SynchronizableAny = kSecAttrSynchronizableAny
+
+/** Search Constants */
+private let MatchLimit = kSecMatchLimit as String
+private let MatchLimitOne = kSecMatchLimitOne
+private let MatchLimitAll = kSecMatchLimitAll
+
+/** Return Type Key Constants */
+private let ReturnData = kSecReturnData as String
+private let ReturnAttributes = kSecReturnAttributes as String
+
+/** Value Type Key Constants */
+private let ValueData = kSecValueData as String
+
+/** Other Constants */
+@available(iOS 8.0, OSX 10.10, *)
+private let UseOperationPrompt = kSecUseOperationPrompt as String
+
+#if os(iOS)
+@available(iOS, introduced=8.0, deprecated=9.0, message="Use a UseAuthenticationUI instead.")
+private let UseNoAuthenticationUI = kSecUseNoAuthenticationUI as String
+#endif
+
+@available(iOS 9.0, OSX 10.11, *)
+@available(watchOS, unavailable)
+private let UseAuthenticationUI = kSecUseAuthenticationUI as String
+
+@available(iOS 9.0, OSX 10.11, *)
+@available(watchOS, unavailable)
+private let UseAuthenticationContext = kSecUseAuthenticationContext as String
+
+@available(iOS 9.0, OSX 10.11, *)
+@available(watchOS, unavailable)
+private let UseAuthenticationUIAllow = kSecUseAuthenticationUIAllow as String
+
+@available(iOS 9.0, OSX 10.11, *)
+@available(watchOS, unavailable)
+private let UseAuthenticationUIFail = kSecUseAuthenticationUIFail as String
+
+@available(iOS 9.0, OSX 10.11, *)
+@available(watchOS, unavailable)
+private let UseAuthenticationUISkip = kSecUseAuthenticationUISkip as String
+
+#if os(iOS)
+/** Credential Key Constants */
+private let SharedPassword = kSecSharedPassword as String
+#endif
 
 public class Keychain {
     public var itemClass: ItemClass {
@@ -157,9 +306,9 @@ public class Keychain {
     public var accessibility: Accessibility {
         return options.accessibility
     }
-    
-    @availability(iOS, introduced=8.0)
-    @availability(OSX, introduced=10.10)
+
+    @available(iOS 8.0, OSX 10.10, *)
+    @available(watchOS, unavailable)
     public var authenticationPolicy: AuthenticationPolicy? {
         return options.authenticationPolicy
     }
@@ -175,19 +324,14 @@ public class Keychain {
     public var comment: String? {
         return options.comment
     }
-    
-    @availability(iOS, introduced=8.0)
-    @availability(OSX, unavailable)
+
+    @available(iOS 8.0, OSX 10.10, *)
+    @available(watchOS, unavailable)
     public var authenticationPrompt: String? {
         return options.authenticationPrompt
     }
     
     private let options: Options
-    
-    private let NSFoundationVersionNumber_iOS_7_1 = 1047.25
-    private let NSFoundationVersionNumber_iOS_8_0 = 1140.11
-    private let NSFoundationVersionNumber_iOS_8_1 = 1141.1
-    private let NSFoundationVersionNumber10_9_2 = 1056.13
     
     // MARK:
     
@@ -226,7 +370,7 @@ public class Keychain {
     }
     
     public convenience init(server: String, protocolType: ProtocolType, authenticationType: AuthenticationType) {
-        self.init(server: NSURL(string: server)!, protocolType: protocolType, authenticationType: .Default)
+        self.init(server: NSURL(string: server)!, protocolType: protocolType, authenticationType: authenticationType)
     }
     
     public convenience init(server: NSURL, protocolType: ProtocolType) {
@@ -253,9 +397,9 @@ public class Keychain {
         options.accessibility = accessibility
         return Keychain(options)
     }
-    
-    @availability(iOS, introduced=8.0)
-    @availability(OSX, introduced=10.10)
+
+    @available(iOS 8.0, OSX 10.10, *)
+    @available(watchOS, unavailable)
     public func accessibility(accessibility: Accessibility, authenticationPolicy: AuthenticationPolicy) -> Keychain {
         var options = self.options
         options.accessibility = accessibility
@@ -280,9 +424,9 @@ public class Keychain {
         options.comment = comment
         return Keychain(options)
     }
-    
-    @availability(iOS, introduced=8.0)
-    @availability(OSX, unavailable)
+
+    @available(iOS 8.0, OSX 10.10, *)
+    @available(watchOS, unavailable)
     public func authenticationPrompt(authenticationPrompt: String) -> Keychain {
         var options = self.options
         options.authenticationPrompt = authenticationPrompt
@@ -291,78 +435,65 @@ public class Keychain {
     
     // MARK:
     
-    public func get(key: String) -> String? {
-        return getString(key)
+    public func get(key: String) throws -> String? {
+        return try getString(key)
     }
     
-    public func getString(key: String) -> String? {
-        let failable = getStringOrError(key)
-        return failable.value
-    }
-    
-    public func getData(key: String) -> NSData? {
-        let failable = getDataOrError(key)
-        return failable.value
-    }
-    
-    public func getStringOrError(key: String) -> FailableOf<String> {
-        let failable = getDataOrError(key)
-        switch failable {
-        case .Success:
-            if let data = failable.value {
-                if let string = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
-                    return FailableOf(string)
-                }
-                return FailableOf(conversionError(message: "failed to convert data to string"))
-            } else {
-                return FailableOf(nil)
-            }
-        case .Failure(let error):
-            return FailableOf(error)
+    public func getString(key: String) throws -> String? {
+        guard let data = try getData(key) else  {
+            return nil
         }
+        guard let string = NSString(data: data, encoding: NSUTF8StringEncoding) as? String else {
+            throw conversionError(message: "failed to convert data to string")
+        }
+        return string
     }
-    
-    public func getDataOrError(key: String) -> FailableOf<NSData> {
+
+    public func getData(key: String) throws -> NSData? {
         var query = options.query()
-        
-        query[kSecMatchLimit as! String] = kSecMatchLimitOne
-        query[kSecReturnData as! String] = kCFBooleanTrue
-        
-        query[kSecAttrAccount as! String] = key
-        
+
+        query[MatchLimit] = MatchLimitOne
+        query[ReturnData] = true
+
+        query[AttributeAccount] = key
+
         var result: AnyObject?
-        var status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
-        
+        let status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
+
         switch status {
         case errSecSuccess:
-            if let data = result as? NSData {
-                return FailableOf(data)
+            guard let data = result as? NSData else {
+                throw Status.UnexpectedError
             }
-            return FailableOf(securityError(status: Status.UnexpectedError.rawValue))
+            return data
         case errSecItemNotFound:
-            return FailableOf(nil)
-        default: ()
+            return nil
+        default:
+            throw securityError(status: status)
         }
-        
-        return FailableOf(securityError(status: status))
     }
-    
+
     // MARK:
     
-    public func set(value: String, key: String) -> NSError? {
-        if let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            return set(data, key: key)
+    public func set(value: String, key: String) throws {
+        guard let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+            throw conversionError(message: "failed to convert string to data")
         }
-        return conversionError(message: "failed to convert string to data")
+        try set(data, key: key)
     }
     
-    public func set(value: NSData, key: String) -> NSError? {
+    public func set(value: NSData, key: String) throws {
         var query = options.query()
-        
-        query[kSecAttrAccount as! String] = key
+        query[AttributeAccount] = key
         #if os(iOS)
-        if floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_1) {
-            query[kSecUseNoAuthenticationUI as! String] = kCFBooleanTrue
+        if #available(iOS 9.0, *) {
+            query[UseAuthenticationUI] = UseAuthenticationUIFail
+        } else {
+            query[UseNoAuthenticationUI] = true
+        }
+        #elseif os(OSX)
+        if #available(OSX 10.11, *) {
+            query[UseAuthenticationUI] = UseAuthenticationUIFail
         }
         #endif
         
@@ -370,130 +501,130 @@ public class Keychain {
         switch status {
         case errSecSuccess, errSecInteractionNotAllowed:
             var query = options.query()
-            query[kSecAttrAccount as! String] = key
+            query[AttributeAccount] = key
             
-            var (attributes, error) = options.attributes(key: nil, value: value)
-            if var error = error {
-                println("error:[\(error.code)] \(error.localizedDescription)")
-                return error
+            let (attributes, error) = options.attributes(key: nil, value: value)
+            if let error = error {
+                print(error.localizedDescription)
+                throw error
+            }
+
+            #if os(iOS)
+            if status == errSecInteractionNotAllowed && floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_8_0) {
+                try remove(key)
+                try set(value, key: key)
             } else {
-                if status == errSecInteractionNotAllowed && floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_8_0) {
-                    var error = remove(key)
-                    if error != nil {
-                        return error
-                    } else {
-                        return set(value, key: key)
-                    }
-                } else {
-                    status = SecItemUpdate(query, attributes)
-                }
+                status = SecItemUpdate(query, attributes)
                 if status != errSecSuccess {
-                    return securityError(status: status)
+                    throw securityError(status: status)
                 }
             }
-        case errSecItemNotFound:
-            var (attributes, error) = options.attributes(key: key, value: value)
-            if var error = error {
-                println("error:[\(error.code)] \(error.localizedDescription)")
-                return error
-            } else {
-                status = SecItemAdd(attributes, nil)
+            #else
+                status = SecItemUpdate(query, attributes)
                 if status != errSecSuccess {
-                    return securityError(status: status)
+                    throw securityError(status: status)
                 }
+            #endif
+        case errSecItemNotFound:
+            let (attributes, error) = options.attributes(key: key, value: value)
+            if let error = error {
+                print(error.localizedDescription)
+                throw error
+            }
+
+            status = SecItemAdd(attributes, nil)
+            if status != errSecSuccess {
+                throw securityError(status: status)
             }
         default:
-            return securityError(status: status)
-        }
-        return nil
-    }
-    
-    // MARK:
-    
-    public func remove(key: String) -> NSError? {
-        var query = options.query()
-        query[kSecAttrAccount as! String] = key
-        
-        let status = SecItemDelete(query)
-        if status != errSecSuccess && status != errSecItemNotFound {
-            return securityError(status: status)
-        }
-        return nil
-    }
-    
-    public func removeAll() -> NSError? {
-        var query = options.query()
-        #if !os(iOS)
-        query[kSecMatchLimit as! String] = kSecMatchLimitAll
-        #endif
-        
-        let status = SecItemDelete(query)
-        if status != errSecSuccess && status != errSecItemNotFound {
-            return securityError(status: status)
-        }
-        return nil
-    }
-    
-    // MARK:
-    
-    public func contains(key: String) -> Bool {
-        var query = options.query()
-        query[kSecAttrAccount as! String] = key
-        
-        var status = SecItemCopyMatching(query, nil)
-        
-        switch status {
-        case errSecSuccess:
-            return true
-        case errSecItemNotFound:
-            return false
-        default:
-            securityError(status: status)
-            return false
+            throw securityError(status: status)
         }
     }
-    
-    // MARK:
-    
+
     public subscript(key: String) -> String? {
         get {
-            return get(key)
+            return (try? get(key)).flatMap { $0 }
         }
-        
+
         set {
             if let value = newValue {
-                set(value, key: key)
+                do {
+                    try set(value, key: key)
+                } catch {}
             } else {
-                remove(key)
+                do {
+                    try remove(key)
+                } catch {}
             }
         }
     }
 
     public subscript(string key: String) -> String? {
         get {
-            return get(key)
+            return self[key]
         }
 
         set {
-            if let value = newValue {
-                set(value, key: key)
-            } else {
-                remove(key)
-            }
+            self[key] = newValue
         }
     }
 
     public subscript(data key: String) -> NSData? {
         get {
-            return getData(key)
+            return (try? getData(key)).flatMap { $0 }
         }
 
         set {
             if let value = newValue {
-                set(value, key: key)
+                do {
+                    try set(value, key: key)
+                } catch {}
             } else {
-                remove(key)
+                do {
+                    try remove(key)
+                } catch {}
             }
+        }
+    }
+    
+    // MARK:
+    
+    public func remove(key: String) throws {
+        var query = options.query()
+        query[AttributeAccount] = key
+        
+        let status = SecItemDelete(query)
+        if status != errSecSuccess && status != errSecItemNotFound {
+            throw securityError(status: status)
+        }
+    }
+    
+    public func removeAll() throws {
+        var query = options.query()
+        #if !os(iOS) && !os(watchOS)
+        query[MatchLimit] = MatchLimitAll
+        #endif
+        
+        let status = SecItemDelete(query)
+        if status != errSecSuccess && status != errSecItemNotFound {
+            throw securityError(status: status)
+        }
+    }
+    
+    // MARK:
+    
+    public func contains(key: String) throws -> Bool {
+        var query = options.query()
+        query[AttributeAccount] = key
+        
+        let status = SecItemCopyMatching(query, nil)
+        switch status {
+        case errSecSuccess:
+            return true
+        case errSecItemNotFound:
+            return false
+        default:
+            throw securityError(status: status)
         }
     }
     
@@ -501,12 +632,13 @@ public class Keychain {
     
     public class func allKeys(itemClass: ItemClass) -> [(String, String)] {
         var query = [String: AnyObject]()
-        query[kSecClass as! String] = itemClass.rawValue
-        query[kSecMatchLimit as! String] = kSecMatchLimitAll
-        query[kSecReturnAttributes as! String] = kCFBooleanTrue
+        query[Class] = itemClass.rawValue
+        query[AttributeSynchronizable] = SynchronizableAny
+        query[MatchLimit] = MatchLimitAll
+        query[ReturnAttributes] = true
         
         var result: AnyObject?
-        var status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
+        let status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
         
         switch status {
         case errSecSuccess:
@@ -535,15 +667,15 @@ public class Keychain {
     
     public class func allItems(itemClass: ItemClass) -> [[String: AnyObject]] {
         var query = [String: AnyObject]()
-        query[kSecClass as! String] = itemClass.rawValue
-        query[kSecMatchLimit as! String] = kSecMatchLimitAll
-        query[kSecReturnAttributes as! String] = kCFBooleanTrue
-        #if os(iOS)
-        query[kSecReturnData as! String] = kCFBooleanTrue
+        query[Class] = itemClass.rawValue
+        query[MatchLimit] = MatchLimitAll
+        query[ReturnAttributes] = true
+        #if os(iOS) || os(watchOS)
+        query[ReturnData] = true
         #endif
         
         var result: AnyObject?
-        var status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
+        let status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
         
         switch status {
         case errSecSuccess:
@@ -564,7 +696,7 @@ public class Keychain {
     }
     
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
+    @available(iOS 8.0, *)
     public func getSharedPassword(completion: (account: String?, password: String?, error: NSError?) -> () = { account, password, error -> () in }) {
         if let domain = server.host {
             self.dynamicType.requestSharedWebCredential(domain: domain, account: nil) { (credentials, error) -> () in
@@ -584,7 +716,7 @@ public class Keychain {
     #endif
 
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
+    @available(iOS 8.0, *)
     public func getSharedPassword(account: String, completion: (password: String?, error: NSError?) -> () = { password, error -> () in }) {
         if let domain = server.host {
             self.dynamicType.requestSharedWebCredential(domain: domain, account: account) { (credentials, error) -> () in
@@ -606,13 +738,14 @@ public class Keychain {
     #endif
 
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
+    @available(iOS 8.0, *)
     public func setSharedPassword(password: String, account: String, completion: (error: NSError?) -> () = { e -> () in }) {
         setSharedPassword(password as String?, account: account, completion: completion)
     }
     #endif
 
     #if os(iOS)
+    @available(iOS 8.0, *)
     private func setSharedPassword(password: String?, account: String, completion: (error: NSError?) -> () = { e -> () in }) {
         if let domain = server.host {
             SecAddSharedWebCredential(domain, account, password) { error -> () in
@@ -630,53 +763,54 @@ public class Keychain {
     #endif
 
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
+    @available(iOS 8.0, *)
     public func removeSharedPassword(account: String, completion: (error: NSError?) -> () = { e -> () in }) {
         setSharedPassword(nil, account: account, completion: completion)
     }
     #endif
 
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
+    @available(iOS 8.0, *)
     public class func requestSharedWebCredential(completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
         requestSharedWebCredential(domain: nil, account: nil, completion: completion)
     }
     #endif
 
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
-    public class func requestSharedWebCredential(#domain: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
+    @available(iOS 8.0, *)
+    public class func requestSharedWebCredential(domain domain: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
         requestSharedWebCredential(domain: domain, account: nil, completion: completion)
     }
     #endif
 
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
-    public class func requestSharedWebCredential(#domain: String, account: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
-        requestSharedWebCredential(domain: domain as String?, account: account as String?, completion: completion)
+    @available(iOS 8.0, *)
+    public class func requestSharedWebCredential(domain domain: String, account: String, completion: (credentials: [[String: String]], error: NSError?) -> () = { credentials, error -> () in }) {
+        requestSharedWebCredential(domain: Optional(domain), account: Optional(account), completion: completion)
     }
     #endif
 
     #if os(iOS)
-    private class func requestSharedWebCredential(#domain: String?, account: String?, completion: (credentials: [[String: String]], error: NSError?) -> ()) {
+    @available(iOS 8.0, *)
+    private class func requestSharedWebCredential(domain domain: String?, account: String?, completion: (credentials: [[String: String]], error: NSError?) -> ()) {
         SecRequestSharedWebCredential(domain, account) { (credentials, error) -> () in
             var remoteError: NSError?
             if let error = error {
                 remoteError = error.error
                 if remoteError?.code != Int(errSecItemNotFound) {
-                    println("error:[\(remoteError!.code)] \(remoteError!.localizedDescription)")
+                    print("error:[\(remoteError!.code)] \(remoteError!.localizedDescription)")
                 }
             }
             if let credentials = credentials as? [[String: AnyObject]] {
                 let credentials = credentials.map { credentials -> [String: String] in
                     var credential = [String: String]()
-                    if let server = credentials[kSecAttrServer as! String] as? String {
+                    if let server = credentials[AttributeServer] as? String {
                         credential["server"] = server
                     }
-                    if let account = credentials[kSecAttrAccount as! String] as? String {
+                    if let account = credentials[AttributeAccount] as? String {
                         credential["account"] = account
                     }
-                    if let password = credentials[kSecSharedPassword.takeUnretainedValue() as! String] as? String {
+                    if let password = credentials[SharedPassword] as? String {
                         credential["password"] = password
                     }
                     return credential
@@ -690,9 +824,13 @@ public class Keychain {
     #endif
 
     #if os(iOS)
-    @availability(iOS, introduced=8.0)
+    /**
+    @abstract Returns a randomly generated password.
+    @return String password in the form xxx-xxx-xxx-xxx where x is taken from the sets "abcdefghkmnopqrstuvwxy", "ABCDEFGHJKLMNPQRSTUVWXYZ", "3456789" with at least one character from each set being present.
+    */
+    @available(iOS 8.0, *)
     public class func generatePassword() -> String {
-        return SecCreateSharedWebCredentialPassword().takeUnretainedValue() as! String
+        return SecCreateSharedWebCredentialPassword()! as String
     }
     #endif
     
@@ -700,14 +838,14 @@ public class Keychain {
     
     private func items() -> [[String: AnyObject]] {
         var query = options.query()
-        query[kSecMatchLimit as! String] = kSecMatchLimitAll
-        query[kSecReturnAttributes as! String] = kCFBooleanTrue
+        query[MatchLimit] = MatchLimitAll
+        query[ReturnAttributes] = true
         #if os(iOS)
-        query[kSecReturnData as! String] = kCFBooleanTrue
+        query[ReturnData] = true
         #endif
         
         var result: AnyObject?
-        var status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
+        let status = withUnsafeMutablePointer(&result) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
         
         switch status {
         case errSecSuccess:
@@ -723,7 +861,7 @@ public class Keychain {
         return []
     }
     
-    private class func prettify(#itemClass: ItemClass, items: [[String: AnyObject]]) -> [[String: AnyObject]] {
+    private class func prettify(itemClass itemClass: ItemClass, items: [[String: AnyObject]]) -> [[String: AnyObject]] {
         let items = items.map { attributes -> [String: AnyObject] in
             var item = [String: AnyObject]()
             
@@ -731,32 +869,32 @@ public class Keychain {
             
             switch itemClass {
             case .GenericPassword:
-                if let service = attributes[kSecAttrService as! String] as? String {
+                if let service = attributes[AttributeService] as? String {
                     item["service"] = service
                 }
-                if let accessGroup = attributes[kSecAttrAccessGroup as! String] as? String {
+                if let accessGroup = attributes[AttributeAccessGroup] as? String {
                     item["accessGroup"] = accessGroup
                 }
             case .InternetPassword:
-                if let server = attributes[kSecAttrServer as! String] as? String {
+                if let server = attributes[AttributeServer] as? String {
                     item["server"] = server
                 }
-                if let proto = attributes[kSecAttrProtocol as! String] as? String {
+                if let proto = attributes[AttributeProtocol] as? String {
                     if let protocolType = ProtocolType(rawValue: proto) {
                         item["protocol"] = protocolType.description
                     }
                 }
-                if let auth = attributes[kSecAttrAuthenticationType as! String] as? String {
+                if let auth = attributes[AttributeAuthenticationType] as? String {
                     if let authenticationType = AuthenticationType(rawValue: auth) {
                         item["authenticationType"] = authenticationType.description
                     }
                 }
             }
             
-            if let key = attributes[kSecAttrAccount as! String] as? String {
+            if let key = attributes[AttributeAccount] as? String {
                 item["key"] = key
             }
-            if let data = attributes[kSecValueData as! String] as? NSData {
+            if let data = attributes[ValueData] as? NSData {
                 if let text = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
                     item["value"] = text
                 } else  {
@@ -764,12 +902,12 @@ public class Keychain {
                 }
             }
             
-            if let accessible = attributes[kSecAttrAccessible as! String] as? String {
+            if let accessible = attributes[AttributeAccessible] as? String {
                 if let accessibility = Accessibility(rawValue: accessible) {
                     item["accessibility"] = accessibility.description
                 }
             }
-            if let synchronizable = attributes[kSecAttrSynchronizable as! String] as? Bool {
+            if let synchronizable = attributes[AttributeSynchronizable] as? Bool {
                 item["synchronizable"] = synchronizable ? "true" : "false"
             }
 
@@ -780,27 +918,27 @@ public class Keychain {
     
     // MARK:
     
-    private class func conversionError(#message: String) -> NSError {
+    private class func conversionError(message message: String) -> NSError {
         let error = NSError(domain: KeychainAccessErrorDomain, code: Int(Status.ConversionError.rawValue), userInfo: [NSLocalizedDescriptionKey: message])
-        println("error:[\(error.code)] \(error.localizedDescription)")
+        print("error:[\(error.code)] \(error.localizedDescription)")
         
         return error
     }
     
-    private func conversionError(#message: String) -> NSError {
+    private func conversionError(message message: String) -> NSError {
         return self.dynamicType.conversionError(message: message)
     }
     
-    private class func securityError(#status: OSStatus) -> NSError {
+    private class func securityError(status status: OSStatus) -> NSError {
         let message = Status(rawValue: status)!.description
         
         let error = NSError(domain: KeychainAccessErrorDomain, code: Int(status), userInfo: [NSLocalizedDescriptionKey: message])
-        println("OSStatus error:[\(error.code)] \(error.localizedDescription)")
+        print("OSStatus error:[\(error.code)] \(error.localizedDescription)")
         
         return error
     }
     
-    private func securityError(#status: OSStatus) -> NSError {
+    private func securityError(status status: OSStatus) -> NSError {
         return self.dynamicType.securityError(status: status)
     }
 }
@@ -828,7 +966,7 @@ struct Options {
     init() {}
 }
 
-extension Keychain : Printable, DebugPrintable {
+extension Keychain : CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         let items = allItems()
         if items.isEmpty {
@@ -853,98 +991,72 @@ extension Options {
     func query() -> [String: AnyObject] {
         var query = [String: AnyObject]()
         
-        query[kSecClass as! String] = itemClass.rawValue
-        query[kSecAttrSynchronizable as! String] = kSecAttrSynchronizableAny
+        query[Class] = itemClass.rawValue
+        query[AttributeSynchronizable] = SynchronizableAny
         
         switch itemClass {
         case .GenericPassword:
-            query[kSecAttrService as! String] = service
-            #if (!arch(i386) && !arch(x86_64)) || !os(iOS)
+            query[AttributeService] = service
+            // Access group is not supported on any simulators.
+            #if (!arch(i386) && !arch(x86_64)) || (!os(iOS) && !os(watchOS))
             if let accessGroup = self.accessGroup {
-                query[kSecAttrAccessGroup as! String] = accessGroup
+                query[AttributeAccessGroup] = accessGroup
             }
             #endif
         case .InternetPassword:
-            query[kSecAttrServer as! String] = server.host
-            query[kSecAttrPort as! String] = server.port
-            query[kSecAttrProtocol as! String] = protocolType.rawValue
-            query[kSecAttrAuthenticationType as! String] = authenticationType.rawValue
+            query[AttributeServer] = server.host
+            query[AttributePort] = server.port
+            query[AttributeProtocol] = protocolType.rawValue
+            query[AttributeAuthenticationType] = authenticationType.rawValue
         }
-        
-        #if os(iOS)
-        if authenticationPrompt != nil {
-            if floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_1) {
-                query[kSecUseOperationPrompt as! String] = authenticationPrompt
-            } else {
-                println("Unavailable 'authenticationPrompt' attribute on iOS versions prior to 8.0.")
+
+        if #available(OSX 10.10, *) {
+            if authenticationPrompt != nil {
+                query[UseOperationPrompt] = authenticationPrompt
             }
         }
-        #endif
         
         return query
     }
     
-    func attributes(#key: String?, value: NSData) -> ([String: AnyObject], NSError?) {
+    func attributes(key key: String?, value: NSData) -> ([String: AnyObject], NSError?) {
         var attributes: [String: AnyObject]
         
         if key != nil {
             attributes = query()
-            attributes[kSecAttrAccount as! String] = key
+            attributes[AttributeAccount] = key
         } else {
             attributes = [String: AnyObject]()
         }
         
-        attributes[kSecValueData as! String] = value
+        attributes[ValueData] = value
         
         if label != nil {
-            attributes[kSecAttrLabel as! String] = label
+            attributes[AttributeLabel] = label
         }
         if comment != nil {
-            attributes[kSecAttrComment as! String] = comment
+            attributes[AttributeComment] = comment
         }
-        
-        #if os(iOS)
-        let iOS_7_1_or_10_9_2 = NSFoundationVersionNumber_iOS_7_1
-        #else
-        let iOS_7_1_or_10_9_2 = NSFoundationVersionNumber10_9_2
-        #endif
+
         if let policy = authenticationPolicy {
-            if floor(NSFoundationVersionNumber) > floor(iOS_7_1_or_10_9_2) {
+            if #available(OSX 10.10, *) {
                 var error: Unmanaged<CFError>?
-                let accessControl = SecAccessControlCreateWithFlags(
-                    kCFAllocatorDefault,
-                    accessibility.rawValue,
-                    SecAccessControlCreateFlags(policy.rawValue),
-                    &error
-                )
-                if let error = error?.takeUnretainedValue() {
-                    return (attributes, error.error)
-                }
-                if accessControl == nil {
+                guard let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, accessibility.rawValue, SecAccessControlCreateFlags(rawValue: policy.rawValue), &error) else {
+                    if let error = error?.takeUnretainedValue() {
+                        return (attributes, error.error)
+                    }
                     let message = Status.UnexpectedError.description
                     return (attributes, NSError(domain: KeychainAccessErrorDomain, code: Int(Status.UnexpectedError.rawValue), userInfo: [NSLocalizedDescriptionKey: message]))
                 }
-                attributes[kSecAttrAccessControl as! String] = accessControl.takeUnretainedValue()
+                attributes[AttributeAccessControl] = accessControl
             } else {
-                #if os(iOS)
-                println("Unavailable 'Touch ID integration' on iOS versions prior to 8.0.")
-                #else
-                println("Unavailable 'Touch ID integration' on OS X versions prior to 10.10.")
-                #endif
+                print("Unavailable 'Touch ID integration' on OS X versions prior to 10.10.")
             }
         } else {
-            if floor(NSFoundationVersionNumber) <= floor(iOS_7_1_or_10_9_2) && accessibility == .WhenPasscodeSetThisDeviceOnly {
-                #if os(iOS)
-                println("Unavailable 'Accessibility.WhenPasscodeSetThisDeviceOnly' attribute on iOS versions prior to 8.0.")
-                #else
-                println("Unavailable 'Accessibility.WhenPasscodeSetThisDeviceOnly' attribute on OS X versions prior to 10.10.")
-                #endif
-            } else {
-                attributes[kSecAttrAccessible as! String] = accessibility.rawValue
-            }
+            attributes[AttributeAccessible] = accessibility.rawValue
         }
         
-        attributes[kSecAttrSynchronizable as! String] = synchronizable
+        attributes[AttributeSynchronizable] = synchronizable
         
         return (attributes, nil)
     }
@@ -952,13 +1064,13 @@ extension Options {
 
 // MARK:
 
-extension ItemClass : RawRepresentable, Printable {
+extension ItemClass : RawRepresentable, CustomStringConvertible {
     
     public init?(rawValue: String) {
         switch rawValue {
-        case kSecClassGenericPassword as! String:
+        case String(kSecClassGenericPassword):
             self = GenericPassword
-        case kSecClassInternetPassword as! String:
+        case String(kSecClassInternetPassword):
             self = InternetPassword
         default:
             return nil
@@ -968,9 +1080,9 @@ extension ItemClass : RawRepresentable, Printable {
     public var rawValue: String {
         switch self {
         case GenericPassword:
-            return kSecClassGenericPassword as! String
+            return String(kSecClassGenericPassword)
         case InternetPassword:
-            return kSecClassInternetPassword as! String
+            return String(kSecClassInternetPassword)
         }
     }
     
@@ -984,71 +1096,71 @@ extension ItemClass : RawRepresentable, Printable {
     }
 }
 
-extension ProtocolType : RawRepresentable, Printable {
+extension ProtocolType : RawRepresentable, CustomStringConvertible {
     
     public init?(rawValue: String) {
         switch rawValue {
-        case kSecAttrProtocolFTP as! String:
+        case String(kSecAttrProtocolFTP):
             self = FTP
-        case kSecAttrProtocolFTPAccount as! String:
+        case String(kSecAttrProtocolFTPAccount):
             self = FTPAccount
-        case kSecAttrProtocolHTTP as! String:
+        case String(kSecAttrProtocolHTTP):
             self = HTTP
-        case kSecAttrProtocolIRC as! String:
+        case String(kSecAttrProtocolIRC):
             self = IRC
-        case kSecAttrProtocolNNTP as! String:
+        case String(kSecAttrProtocolNNTP):
             self = NNTP
-        case kSecAttrProtocolPOP3 as! String:
+        case String(kSecAttrProtocolPOP3):
             self = POP3
-        case kSecAttrProtocolSMTP as! String:
+        case String(kSecAttrProtocolSMTP):
             self = SMTP
-        case kSecAttrProtocolSOCKS as! String:
+        case String(kSecAttrProtocolSOCKS):
             self = SOCKS
-        case kSecAttrProtocolIMAP as! String:
+        case String(kSecAttrProtocolIMAP):
             self = IMAP
-        case kSecAttrProtocolLDAP as! String:
+        case String(kSecAttrProtocolLDAP):
             self = LDAP
-        case kSecAttrProtocolAppleTalk as! String:
+        case String(kSecAttrProtocolAppleTalk):
             self = AppleTalk
-        case kSecAttrProtocolAFP as! String:
+        case String(kSecAttrProtocolAFP):
             self = AFP
-        case kSecAttrProtocolTelnet as! String:
+        case String(kSecAttrProtocolTelnet):
             self = Telnet
-        case kSecAttrProtocolSSH as! String:
+        case String(kSecAttrProtocolSSH):
             self = SSH
-        case kSecAttrProtocolFTPS as! String:
+        case String(kSecAttrProtocolFTPS):
             self = FTPS
-        case kSecAttrProtocolHTTPS as! String:
+        case String(kSecAttrProtocolHTTPS):
             self = HTTPS
-        case kSecAttrProtocolHTTPProxy as! String:
+        case String(kSecAttrProtocolHTTPProxy):
             self = HTTPProxy
-        case kSecAttrProtocolHTTPSProxy as! String:
+        case String(kSecAttrProtocolHTTPSProxy):
             self = HTTPSProxy
-        case kSecAttrProtocolFTPProxy as! String:
+        case String(kSecAttrProtocolFTPProxy):
             self = FTPProxy
-        case kSecAttrProtocolSMB as! String:
+        case String(kSecAttrProtocolSMB):
             self = SMB
-        case kSecAttrProtocolRTSP as! String:
+        case String(kSecAttrProtocolRTSP):
             self = RTSP
-        case kSecAttrProtocolRTSPProxy as! String:
+        case String(kSecAttrProtocolRTSPProxy):
             self = RTSPProxy
-        case kSecAttrProtocolDAAP as! String:
+        case String(kSecAttrProtocolDAAP):
             self = DAAP
-        case kSecAttrProtocolEPPC as! String:
+        case String(kSecAttrProtocolEPPC):
             self = EPPC
-        case kSecAttrProtocolIPP as! String:
+        case String(kSecAttrProtocolIPP):
             self = IPP
-        case kSecAttrProtocolNNTPS as! String:
+        case String(kSecAttrProtocolNNTPS):
             self = NNTPS
-        case kSecAttrProtocolLDAPS as! String:
+        case String(kSecAttrProtocolLDAPS):
             self = LDAPS
-        case kSecAttrProtocolTelnetS as! String:
+        case String(kSecAttrProtocolTelnetS):
             self = TelnetS
-        case kSecAttrProtocolIMAPS as! String:
+        case String(kSecAttrProtocolIMAPS):
             self = IMAPS
-        case kSecAttrProtocolIRCS as! String:
+        case String(kSecAttrProtocolIRCS):
             self = IRCS
-        case kSecAttrProtocolPOP3S as! String:
+        case String(kSecAttrProtocolPOP3S):
             self = POP3S
         default:
             return nil
@@ -1058,67 +1170,67 @@ extension ProtocolType : RawRepresentable, Printable {
     public var rawValue: String {
         switch self {
         case FTP:
-            return kSecAttrProtocolFTP as! String
+            return kSecAttrProtocolFTP as String
         case FTPAccount:
-            return kSecAttrProtocolFTPAccount as! String
+            return kSecAttrProtocolFTPAccount as String
         case HTTP:
-            return kSecAttrProtocolHTTP as! String
+            return kSecAttrProtocolHTTP as String
         case IRC:
-            return kSecAttrProtocolIRC as! String
+            return kSecAttrProtocolIRC as String
         case NNTP:
-            return kSecAttrProtocolNNTP as! String
+            return kSecAttrProtocolNNTP as String
         case POP3:
-            return kSecAttrProtocolPOP3 as! String
+            return kSecAttrProtocolPOP3 as String
         case SMTP:
-            return kSecAttrProtocolSMTP as! String
+            return kSecAttrProtocolSMTP as String
         case SOCKS:
-            return kSecAttrProtocolSOCKS as! String
+            return kSecAttrProtocolSOCKS as String
         case IMAP:
-            return kSecAttrProtocolIMAP as! String
+            return kSecAttrProtocolIMAP as String
         case LDAP:
-            return kSecAttrProtocolLDAP as! String
+            return kSecAttrProtocolLDAP as String
         case AppleTalk:
-            return kSecAttrProtocolAppleTalk as! String
+            return kSecAttrProtocolAppleTalk as String
         case AFP:
-            return kSecAttrProtocolAFP as! String
+            return kSecAttrProtocolAFP as String
         case Telnet:
-            return kSecAttrProtocolTelnet as! String
+            return kSecAttrProtocolTelnet as String
         case SSH:
-            return kSecAttrProtocolSSH as! String
+            return kSecAttrProtocolSSH as String
         case FTPS:
-            return kSecAttrProtocolFTPS as! String
+            return kSecAttrProtocolFTPS as String
         case HTTPS:
-            return kSecAttrProtocolHTTPS as! String
+            return kSecAttrProtocolHTTPS as String
         case HTTPProxy:
-            return kSecAttrProtocolHTTPProxy as! String
+            return kSecAttrProtocolHTTPProxy as String
         case HTTPSProxy:
-            return kSecAttrProtocolHTTPSProxy as! String
+            return kSecAttrProtocolHTTPSProxy as String
         case FTPProxy:
-            return kSecAttrProtocolFTPProxy as! String
+            return kSecAttrProtocolFTPProxy as String
         case SMB:
-            return kSecAttrProtocolSMB as! String
+            return kSecAttrProtocolSMB as String
         case RTSP:
-            return kSecAttrProtocolRTSP as! String
+            return kSecAttrProtocolRTSP as String
         case RTSPProxy:
-            return kSecAttrProtocolRTSPProxy as! String
+            return kSecAttrProtocolRTSPProxy as String
         case DAAP:
-            return kSecAttrProtocolDAAP as! String
+            return kSecAttrProtocolDAAP as String
         case EPPC:
-            return kSecAttrProtocolEPPC as! String
+            return kSecAttrProtocolEPPC as String
         case IPP:
-            return kSecAttrProtocolIPP as! String
+            return kSecAttrProtocolIPP as String
         case NNTPS:
-            return kSecAttrProtocolNNTPS as! String
+            return kSecAttrProtocolNNTPS as String
         case LDAPS:
-            return kSecAttrProtocolLDAPS as! String
+            return kSecAttrProtocolLDAPS as String
         case TelnetS:
-            return kSecAttrProtocolTelnetS as! String
+            return kSecAttrProtocolTelnetS as String
         case IMAPS:
-            return kSecAttrProtocolIMAPS as! String
+            return kSecAttrProtocolIMAPS as String
         case IRCS:
-            return kSecAttrProtocolIRCS as! String
+            return kSecAttrProtocolIRCS as String
         case POP3S:
-            return kSecAttrProtocolPOP3S as! String
+            return kSecAttrProtocolPOP3S as String
         }
     }
     
@@ -1190,25 +1302,25 @@ extension ProtocolType : RawRepresentable, Printable {
     }
 }
 
-extension AuthenticationType : RawRepresentable, Printable {
+extension AuthenticationType : RawRepresentable, CustomStringConvertible {
     
     public init?(rawValue: String) {
         switch rawValue {
-        case kSecAttrAuthenticationTypeNTLM as! String:
+        case String(kSecAttrAuthenticationTypeNTLM):
             self = NTLM
-        case kSecAttrAuthenticationTypeMSN as! String:
+        case String(kSecAttrAuthenticationTypeMSN):
             self = MSN
-        case kSecAttrAuthenticationTypeDPA as! String:
+        case String(kSecAttrAuthenticationTypeDPA):
             self = DPA
-        case kSecAttrAuthenticationTypeRPA as! String:
+        case String(kSecAttrAuthenticationTypeRPA):
             self = RPA
-        case kSecAttrAuthenticationTypeHTTPBasic as! String:
+        case String(kSecAttrAuthenticationTypeHTTPBasic):
             self = HTTPBasic
-        case kSecAttrAuthenticationTypeHTTPDigest as! String:
+        case String(kSecAttrAuthenticationTypeHTTPDigest):
             self = HTTPDigest
-        case kSecAttrAuthenticationTypeHTMLForm as! String:
+        case String(kSecAttrAuthenticationTypeHTMLForm):
             self = HTMLForm
-        case kSecAttrAuthenticationTypeDefault as! String:
+        case String(kSecAttrAuthenticationTypeDefault):
             self = Default
         default:
             return nil
@@ -1218,21 +1330,21 @@ extension AuthenticationType : RawRepresentable, Printable {
     public var rawValue: String {
         switch self {
         case NTLM:
-            return kSecAttrAuthenticationTypeNTLM as! String
+            return kSecAttrAuthenticationTypeNTLM as String
         case MSN:
-            return kSecAttrAuthenticationTypeMSN as! String
+            return kSecAttrAuthenticationTypeMSN as String
         case DPA:
-            return kSecAttrAuthenticationTypeDPA as! String
+            return kSecAttrAuthenticationTypeDPA as String
         case RPA:
-            return kSecAttrAuthenticationTypeRPA as! String
+            return kSecAttrAuthenticationTypeRPA as String
         case HTTPBasic:
-            return kSecAttrAuthenticationTypeHTTPBasic as! String
+            return kSecAttrAuthenticationTypeHTTPBasic as String
         case HTTPDigest:
-            return kSecAttrAuthenticationTypeHTTPDigest as! String
+            return kSecAttrAuthenticationTypeHTTPDigest as String
         case HTMLForm:
-            return kSecAttrAuthenticationTypeHTMLForm as! String
+            return kSecAttrAuthenticationTypeHTMLForm as String
         case Default:
-            return kSecAttrAuthenticationTypeDefault as! String
+            return kSecAttrAuthenticationTypeDefault as String
         }
     }
     
@@ -1258,45 +1370,68 @@ extension AuthenticationType : RawRepresentable, Printable {
     }
 }
 
-extension Accessibility : RawRepresentable, Printable {
+extension Accessibility : RawRepresentable, CustomStringConvertible {
     
     public init?(rawValue: String) {
-        switch rawValue {
-        case kSecAttrAccessibleWhenUnlocked as! String:
-            self = WhenUnlocked
-        case kSecAttrAccessibleAfterFirstUnlock as! String:
-            self = AfterFirstUnlock
-        case kSecAttrAccessibleAlways as! String:
-            self = Always
-        case kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly as! String:
-            self = WhenPasscodeSetThisDeviceOnly
-        case kSecAttrAccessibleWhenUnlockedThisDeviceOnly as! String:
-            self = WhenUnlockedThisDeviceOnly
-        case kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as! String:
-            self = AfterFirstUnlockThisDeviceOnly
-        case kSecAttrAccessibleAlwaysThisDeviceOnly as! String:
-            self = AlwaysThisDeviceOnly
-        default:
-            return nil
+        if #available(OSX 10.10, *) {
+            switch rawValue {
+            case String(kSecAttrAccessibleWhenUnlocked):
+                self = WhenUnlocked
+            case String(kSecAttrAccessibleAfterFirstUnlock):
+                self = AfterFirstUnlock
+            case String(kSecAttrAccessibleAlways):
+                self = Always
+            case String(kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly):
+                self = WhenPasscodeSetThisDeviceOnly
+            case String(kSecAttrAccessibleWhenUnlockedThisDeviceOnly):
+                self = WhenUnlockedThisDeviceOnly
+            case String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly):
+                self = AfterFirstUnlockThisDeviceOnly
+            case String(kSecAttrAccessibleAlwaysThisDeviceOnly):
+                self = AlwaysThisDeviceOnly
+            default:
+                return nil
+            }
+        } else {
+            switch rawValue {
+            case String(kSecAttrAccessibleWhenUnlocked):
+                self = WhenUnlocked
+            case String(kSecAttrAccessibleAfterFirstUnlock):
+                self = AfterFirstUnlock
+            case String(kSecAttrAccessibleAlways):
+                self = Always
+            case String(kSecAttrAccessibleWhenUnlockedThisDeviceOnly):
+                self = WhenUnlockedThisDeviceOnly
+            case String(kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly):
+                self = AfterFirstUnlockThisDeviceOnly
+            case String(kSecAttrAccessibleAlwaysThisDeviceOnly):
+                self = AlwaysThisDeviceOnly
+            default:
+                return nil
+            }
         }
     }
-    
+
     public var rawValue: String {
         switch self {
         case WhenUnlocked:
-            return kSecAttrAccessibleWhenUnlocked as! String
+            return kSecAttrAccessibleWhenUnlocked as String
         case AfterFirstUnlock:
-            return kSecAttrAccessibleAfterFirstUnlock as! String
+            return kSecAttrAccessibleAfterFirstUnlock as String
         case Always:
-            return kSecAttrAccessibleAlways as! String
+            return kSecAttrAccessibleAlways as String
         case WhenPasscodeSetThisDeviceOnly:
-            return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly as! String
+            if #available(OSX 10.10, *) {
+                return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly as String
+            } else {
+                fatalError("'Accessibility.WhenPasscodeSetThisDeviceOnly' is not available on this version of OS.")
+            }
         case WhenUnlockedThisDeviceOnly:
-            return kSecAttrAccessibleWhenUnlockedThisDeviceOnly as! String
+            return kSecAttrAccessibleWhenUnlockedThisDeviceOnly as String
         case AfterFirstUnlockThisDeviceOnly:
-            return kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as! String
+            return kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as String
         case AlwaysThisDeviceOnly:
-            return kSecAttrAccessibleAlwaysThisDeviceOnly as! String
+            return kSecAttrAccessibleAlwaysThisDeviceOnly as String
         }
     }
     
@@ -1320,72 +1455,28 @@ extension Accessibility : RawRepresentable, Printable {
     }
 }
 
-extension AuthenticationPolicy : RawRepresentable, Printable {
-    
-    public init?(rawValue: Int) {
-        var flags = SecAccessControlCreateFlags.UserPresence
-        
-        switch rawValue {
-        case flags.rawValue:
-            self = UserPresence
-        default:
-            return nil
-        }
-    }
-    
-    public var rawValue: Int {
-        switch self {
-        case UserPresence:
-            return SecAccessControlCreateFlags.UserPresence.rawValue
-        }
-    }
-    
-    public var description : String {
-        switch self {
-        case UserPresence:
-            return "UserPresence"
-        }
-    }
-}
-
-extension FailableOf: Printable, DebugPrintable {
-    public var description: String {
-        switch self {
-        case .Success(let success):
-            if let value = success.value {
-                return "\(value)"
-            }
-            return "nil"
-        case .Failure(let error):
-            return "\(error.localizedDescription)"
-        }
-    }
-    
-    public var debugDescription: String {
-        switch self {
-        case .Success(let success):
-            return "\(success.value)"
-        case .Failure(let error):
-            return "\(error)"
-        }
-    }
-}
-
 extension CFError {
     var error: NSError {
-        var domain = CFErrorGetDomain(self) as String
-        var code = CFErrorGetCode(self)
-        var userInfo = CFErrorCopyUserInfo(self) as [NSObject: AnyObject]
+        let domain = CFErrorGetDomain(self) as String
+        let code = CFErrorGetCode(self)
+        let userInfo = CFErrorCopyUserInfo(self) as [NSObject: AnyObject]
         
         return NSError(domain: domain, code: code, userInfo: userInfo)
     }
 }
 
-public enum Status : OSStatus {
+public enum Status : OSStatus, ErrorType {
     case Success
     case Unimplemented
+    case DiskFull
+    case IO
+    case OpWr
     case Param
+    case WrPerm
     case Allocate
+    case UserCanceled
+    case BadReq
+    case InternalComponent
     case NotAvailable
     case ReadOnly
     case AuthFailed
@@ -1415,6 +1506,7 @@ public enum Status : OSStatus {
     case DataNotModifiable
     case CreateChainFailed
     case InvalidPrefsDomain
+    case InDarkWake
     case ACLNotSimple
     case PolicyNotFound
     case InvalidTrustSetting
@@ -1473,7 +1565,6 @@ public enum Status : OSStatus {
     case AppleInvalidKeyEndDate
     case ConversionError
     case AppleSSLv2Rollback
-    case DiskFull
     case QuotaExceeded
     case FileTooBig
     case InvalidDatabaseBlob
@@ -1758,10 +1849,29 @@ public enum Status : OSStatus {
     case InvalidIndexInfo
     case InvalidNewOwner
     case InvalidModifyMode
+    case MissingRequiredExtension
+    case ExtendedKeyUsageNotCritical
+    case TimestampMissing
+    case TimestampInvalid
+    case TimestampNotTrusted
+    case TimestampServiceNotAvailable
+    case TimestampBadAlg
+    case TimestampBadRequest
+    case TimestampBadDataFormat
+    case TimestampTimeNotAvailable
+    case TimestampUnacceptedPolicy
+    case TimestampUnacceptedExtension
+    case TimestampAddInfoNotAvailable
+    case TimestampSystemFailure
+    case SigningTimeMissing
+    case TimestampRejection
+    case TimestampWaiting
+    case TimestampRevocationWarning
+    case TimestampRevocationNotification
     case UnexpectedError
 }
 
-extension Status : RawRepresentable, Printable {
+extension Status : RawRepresentable, CustomStringConvertible {
     
     public init?(rawValue: OSStatus) {
         switch rawValue {
@@ -1769,10 +1879,24 @@ extension Status : RawRepresentable, Printable {
             self = Success
         case -4:
             self = Unimplemented
+        case -34:
+            self = DiskFull
+        case -36:
+            self = IO
+        case -49:
+            self = OpWr
         case -50:
             self = Param
+        case -61:
+            self = WrPerm
         case -108:
             self = Allocate
+        case -128:
+            self = UserCanceled
+        case -909:
+            self = BadReq
+        case -2070:
+            self = InternalComponent
         case -25291:
             self = NotAvailable
         case -25292:
@@ -1831,6 +1955,8 @@ extension Status : RawRepresentable, Printable {
             self = CreateChainFailed
         case -25319:
             self = InvalidPrefsDomain
+        case -25320:
+            self = InDarkWake
         case -25240:
             self = ACLNotSimple
         case -25241:
@@ -1901,7 +2027,7 @@ extension Status : RawRepresentable, Printable {
             self = ReturnAttributesUnsupported
         case -34010:
             self = ReturnRefUnsupported
-        case -34010:
+        case -34011:
             self = ReturnPersitentRefUnsupported
         case -34012:
             self = ValueRefUnsupported
@@ -1947,8 +2073,6 @@ extension Status : RawRepresentable, Printable {
             self = ConversionError
         case -67595:
             self = AppleSSLv2Rollback
-        case -34:
-            self = DiskFull
         case -67596:
             self = QuotaExceeded
         case -67597:
@@ -2517,6 +2641,44 @@ extension Status : RawRepresentable, Printable {
             self = InvalidNewOwner
         case -67879:
             self = InvalidModifyMode
+        case -67880:
+            self = MissingRequiredExtension
+        case -67881:
+            self = ExtendedKeyUsageNotCritical
+        case -67882:
+            self = TimestampMissing
+        case -67883:
+            self = TimestampInvalid
+        case -67884:
+            self = TimestampNotTrusted
+        case -67885:
+            self = TimestampServiceNotAvailable
+        case -67886:
+            self = TimestampBadAlg
+        case -67887:
+            self = TimestampBadRequest
+        case -67888:
+            self = TimestampBadDataFormat
+        case -67889:
+            self = TimestampTimeNotAvailable
+        case -67890:
+            self = TimestampUnacceptedPolicy
+        case -67891:
+            self = TimestampUnacceptedExtension
+        case -67892:
+            self = TimestampAddInfoNotAvailable
+        case -67893:
+            self = TimestampSystemFailure
+        case -67894:
+            self = SigningTimeMissing
+        case -67895:
+            self = TimestampRejection
+        case -67896:
+            self = TimestampWaiting
+        case -67897:
+            self = TimestampRevocationWarning
+        case -67898:
+            self = TimestampRevocationNotification
         default:
             self = UnexpectedError
         }
@@ -2528,10 +2690,24 @@ extension Status : RawRepresentable, Printable {
             return 0
         case Unimplemented:
             return -4
+        case DiskFull:
+            return -34
+        case IO:
+            return -36
+        case OpWr:
+            return -49
         case Param:
             return -50
+        case WrPerm:
+            return -61
         case Allocate:
             return -108
+        case UserCanceled:
+            return -128
+        case BadReq:
+            return -909
+        case InternalComponent:
+            return -2070
         case NotAvailable:
             return -25291
         case ReadOnly:
@@ -2590,6 +2766,8 @@ extension Status : RawRepresentable, Printable {
             return -25318
         case InvalidPrefsDomain:
             return -25319
+        case InDarkWake:
+            return -25320
         case ACLNotSimple:
             return -25240
         case PolicyNotFound:
@@ -2661,7 +2839,7 @@ extension Status : RawRepresentable, Printable {
         case ReturnRefUnsupported:
             return -34010
         case ReturnPersitentRefUnsupported:
-            return -34010
+            return -34011
         case ValueRefUnsupported:
             return -34012
         case ValuePersistentRefUnsupported:
@@ -2706,8 +2884,6 @@ extension Status : RawRepresentable, Printable {
             return -67594
         case AppleSSLv2Rollback:
             return -67595
-        case DiskFull:
-            return -34
         case QuotaExceeded:
             return -67596
         case FileTooBig:
@@ -3276,6 +3452,44 @@ extension Status : RawRepresentable, Printable {
             return -67878
         case InvalidModifyMode:
             return -67879
+        case MissingRequiredExtension:
+            return -67880
+        case ExtendedKeyUsageNotCritical:
+            return -67881
+        case TimestampMissing:
+            return -67882
+        case TimestampInvalid:
+            return -67883
+        case TimestampNotTrusted:
+            return -67884
+        case TimestampServiceNotAvailable:
+            return -67885
+        case TimestampBadAlg:
+            return -67886
+        case TimestampBadRequest:
+            return -67887
+        case TimestampBadDataFormat:
+            return -67888
+        case TimestampTimeNotAvailable:
+            return -67889
+        case TimestampUnacceptedPolicy:
+            return -67890
+        case TimestampUnacceptedExtension:
+            return -67891
+        case TimestampAddInfoNotAvailable:
+            return -67892
+        case TimestampSystemFailure:
+            return -67893
+        case SigningTimeMissing:
+            return -67894
+        case TimestampRejection:
+            return -67895
+        case TimestampWaiting:
+            return -67896
+        case TimestampRevocationWarning:
+            return -67897
+        case TimestampRevocationNotification:
+            return -67898
         default:
             return -99999
         }
@@ -3287,10 +3501,24 @@ extension Status : RawRepresentable, Printable {
             return "No error."
         case Unimplemented:
             return "Function or operation not implemented."
+        case DiskFull:
+            return "The disk is full."
+        case IO:
+            return "I/O error (bummers)"
+        case OpWr:
+            return "file already open with with write permission"
         case Param:
             return "One or more parameters passed to a function were not valid."
+        case WrPerm:
+            return "write permissions error"
         case Allocate:
             return "Failed to allocate memory."
+        case UserCanceled:
+            return "User canceled the operation."
+        case BadReq:
+            return "Bad parameter or invalid state for operation."
+        case InternalComponent:
+            return ""
         case NotAvailable:
             return "No keychain is available. You may need to restart your computer."
         case ReadOnly:
@@ -3349,6 +3577,8 @@ extension Status : RawRepresentable, Printable {
             return "One or more certificates required to validate this certificate cannot be found."
         case InvalidPrefsDomain:
             return "The specified preferences domain is not valid."
+        case InDarkWake:
+            return "In dark wake, no UI possible"
         case ACLNotSimple:
             return "The specified access control list is not in standard (simple) form."
         case PolicyNotFound:
@@ -3465,8 +3695,6 @@ extension Status : RawRepresentable, Printable {
             return "A conversion error has occurred."
         case AppleSSLv2Rollback:
             return "A SSLv2 rollback error has occurred."
-        case DiskFull:
-            return "The disk is full."
         case QuotaExceeded:
             return "The quota was exceeded."
         case FileTooBig:
@@ -4035,6 +4263,44 @@ extension Status : RawRepresentable, Printable {
             return "The new owner is not valid."
         case InvalidModifyMode:
             return "The modify mode is not valid."
+        case MissingRequiredExtension:
+            return "A required certificate extension is missing."
+        case ExtendedKeyUsageNotCritical:
+            return "The extended key usage extension was not marked critical."
+        case TimestampMissing:
+            return "A timestamp was expected but was not found."
+        case TimestampInvalid:
+            return "The timestamp was not valid."
+        case TimestampNotTrusted:
+            return "The timestamp was not trusted."
+        case TimestampServiceNotAvailable:
+            return "The timestamp service is not available."
+        case TimestampBadAlg:
+            return "An unrecognized or unsupported Algorithm Identifier in timestamp."
+        case TimestampBadRequest:
+            return "The timestamp transaction is not permitted or supported."
+        case TimestampBadDataFormat:
+            return "The timestamp data submitted has the wrong format."
+        case TimestampTimeNotAvailable:
+            return "The time source for the Timestamp Authority is not available."
+        case TimestampUnacceptedPolicy:
+            return "The requested policy is not supported by the Timestamp Authority."
+        case TimestampUnacceptedExtension:
+            return "The requested extension is not supported by the Timestamp Authority."
+        case TimestampAddInfoNotAvailable:
+            return "The additional information requested is not available."
+        case TimestampSystemFailure:
+            return "The timestamp request cannot be handled due to system failure."
+        case SigningTimeMissing:
+            return "A signing time was expected but was not found."
+        case TimestampRejection:
+            return "A timestamp transaction was rejected."
+        case TimestampWaiting:
+            return "A timestamp transaction is waiting."
+        case TimestampRevocationWarning:
+            return "A timestamp authority revocation warning was issued."
+        case TimestampRevocationNotification:
+            return "A timestamp authority revocation notification was issued."
         default:
             return "Unexpected error has occurred."
         }

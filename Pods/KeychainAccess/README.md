@@ -1,8 +1,9 @@
 # KeychainAccess
 [![CI Status](http://img.shields.io/travis/kishikawakatsumi/KeychainAccess.svg?style=flat)](https://travis-ci.org/kishikawakatsumi/KeychainAccess)
+[![Circle CI](https://circleci.com/gh/kishikawakatsumi/KeychainAccess.svg?style=shield)](https://circleci.com/gh/kishikawakatsumi/KeychainAccess)
+[![Coverage Status](https://coveralls.io/repos/kishikawakatsumi/KeychainAccess/badge.svg?branch=master&service=github)](https://coveralls.io/github/kishikawakatsumi/KeychainAccess?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/KeychainAccess.svg?style=flat)](http://cocoadocs.org/docsets/KeychainAccess)
-[![License](https://img.shields.io/cocoapods/l/KeychainAccess.svg?style=flat)](http://cocoadocs.org/docsets/KeychainAccess)
 [![Platform](https://img.shields.io/cocoapods/p/KeychainAccess.svg?style=flat)](http://cocoadocs.org/docsets/KeychainAccess)
 
 KeychainAccess is a simple Swift wrapper for Keychain that works on iOS and OS X. Makes using Keychain APIs exremely easy and much more palatable to use in Swift.
@@ -20,6 +21,7 @@ KeychainAccess is a simple Swift wrapper for Keychain that works on iOS and OS X
 - **[Support TouchID and Keychain integration (iOS 8+)](#touch_id_integration)**
 - **[Support Shared Web Credentials (iOS 8+)](#shared_web_credentials)**
 - Works on both iOS & OS X
+- watchOS and tvOS are supported
 
 ## :book: Usage
 
@@ -94,8 +96,11 @@ keychain.set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
 #### error handling
 
 ```swift
-if let error = keychain.set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi") {
-    println("error: \(error)")
+do {
+    try keychain.set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+}
+catch let error {
+    print(error)
 }
 ```
 
@@ -124,66 +129,17 @@ let secretData = keychain[data: "secret"]
 ##### as String
 
 ```swift
-let token = keychain.get("kishikawakatsumi")
+let token = try? keychain.get("kishikawakatsumi")
 ```
 
 ```swift
-let token = keychain.getString("kishikawakatsumi")
+let token = try? keychain.getString("kishikawakatsumi")
 ```
 
 ##### as NSData
 
 ```swift
-let data = keychain.getData("kishikawakatsumi")
-```
-
-#### error handling
-
-**First, get the `failable` (value or error) object**
-
-```swift
-let failable = keychain.getStringOrError("kishikawakatsumi")
-```
-
-**1. check `enum` state**
-
-```swift
-switch failable {
-case .Success:
-  println("token: \(failable.value)")
-case .Failure:
-  println("error: \(failable.error)")
-}
-```
-
-**2. check `error` object**
-
-```swift
-if let error = failable.error {
-    println("error: \(error)")
-} else {
-    println("token: \(failable.value)")
-}
-```
-
-**3. check `succeeded` property**
-
-```swift
-if failable.succeeded {
-    println("token: \(failable.value)")
-} else {
-    println("error: \(failable.error)")
-}
-```
-
-**4. check `failed` property**
-
-```swift
-if failable.failed {
-    println("error: \(failable.error)")
-} else {
-    println("token: \(failable.value)")
-}
+let data = try? keychain.getData("kishikawakatsumi")
 ```
 
 ### :key: Removing an item
@@ -197,14 +153,10 @@ keychain["kishikawakatsumi"] = nil
 #### remove method
 
 ```swift
-keychain.remove("kishikawakatsumi")
-```
-
-#### error handling
-
-```swift
-if let error = keychain.remove("kishikawakatsumi") {
-    println("error: \(error)")
+do {
+    try keychain.remove("kishikawakatsumi")
+} catch let error {
+    print("error: \(error)")
 }
 ```
 
@@ -212,10 +164,14 @@ if let error = keychain.remove("kishikawakatsumi") {
 
 ```swift
 let keychain = Keychain(server: "https://github.com", protocolType: .HTTPS)
-keychain
-    .label("github.com (kishikawakatsumi)")
-    .comment("github access token")
-    .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+do {
+    try keychain
+        .label("github.com (kishikawakatsumi)")
+        .comment("github access token")
+        .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+} catch let error {
+    print("error: \(error)")
+}
 ```
 
 ### :key: Configuration (Accessibility, Sharing, iCould Sync)
@@ -253,9 +209,13 @@ keychain["kishikawakatsumi"] = "01234567-89ab-cdef-0123-456789abcdef"
 ```swift
 let keychain = Keychain(service: "com.example.github-token")
 
-keychain
-    .accessibility(.AfterFirstUnlock)
-    .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+do {
+    try keychain
+        .accessibility(.AfterFirstUnlock)
+        .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+} catch let error {
+    print("error: \(error)")
+}
 ```
 
 ##### For foreground application
@@ -274,9 +234,13 @@ keychain["kishikawakatsumi"] = "01234567-89ab-cdef-0123-456789abcdef"
 ```swift
 let keychain = Keychain(service: "com.example.github-token")
 
-keychain
-    .accessibility(.WhenUnlocked)
-    .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+do {
+    try keychain
+        .accessibility(.WhenUnlocked)
+        .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+} catch let error {
+    print("error: \(error)")
+}
 ```
 
 #### :couple: Sharing Keychain items
@@ -301,9 +265,13 @@ keychain["kishikawakatsumi"] = "01234567-89ab-cdef-0123-456789abcdef"
 ```swift
 let keychain = Keychain(service: "com.example.github-token")
 
-keychain
-    .synchronizable(true)
-    .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+do {
+    try keychain
+        .synchronizable(true)
+        .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+} catch let error {
+    print("error: \(error)")
+}
 ```
 
 ### <a name="touch_id_integration"> :fu: Touch ID integration
@@ -319,11 +287,12 @@ If you want to store the Touch ID protected Keychain item, specify `accessibilit
 let keychain = Keychain(service: "com.example.github-token")
 
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-    let error = keychain
-        .accessibility(.WhenPasscodeSetThisDeviceOnly, authenticationPolicy: .UserPresence)
-        .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
-
-    if error != nil {
+    do {
+        // Should be the secret invalidated when passcode is removed? If not then use `.WhenUnlocked`
+        try keychain
+            .accessibility(.WhenPasscodeSetThisDeviceOnly, authenticationPolicy: .UserPresence)
+            .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+    } catch let error {
         // Error handling if needed...
     }
 }
@@ -343,12 +312,13 @@ If the item not protected, the `authenticationPrompt` parameter just be ignored.
 let keychain = Keychain(service: "com.example.github-token")
 
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-    let error = keychain
-        .accessibility(.WhenPasscodeSetThisDeviceOnly, authenticationPolicy: .UserPresence)
-        .authenticationPrompt("Authenticate to update your access token")
-        .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
-
-    if error != nil {
+    do {
+        // Should be the secret invalidated when passcode is removed? If not then use `.WhenUnlocked`
+        try keychain
+            .accessibility(.WhenPasscodeSetThisDeviceOnly, authenticationPolicy: .UserPresence)
+            .authenticationPrompt("Authenticate to update your access token")
+            .set("01234567-89ab-cdef-0123-456789abcdef", key: "kishikawakatsumi")
+    } catch let error {
         // Error handling if needed...
     }
 }
@@ -364,14 +334,13 @@ If the item not protected, the `authenticationPrompt` parameter just be ignored.
 let keychain = Keychain(service: "com.example.github-token")
 
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-    let failable = keychain
-        .authenticationPrompt("Authenticate to login to server")
-        .getStringOrError("kishikawakatsumi")
+    do {
+        let password = try keychain
+            .authenticationPrompt("Authenticate to login to server")
+            .get("kishikawakatsumi")
 
-    if failable.succeeded {
-        println("value: \(failable.value)")
-    } else {
-        println("error: \(failable.error?.localizedDescription)")
+        print("password: \(password)")
+    } catch let error {
         // Error handling if needed...
     }
 }
@@ -385,10 +354,9 @@ There is no way to show Touch ID or passcode authentication when removing Keycha
 ```swift
 let keychain = Keychain(service: "com.example.github-token")
 
-let error = keychain.remove("kishikawakatsumi")
-
-if error != nil {
-    println("error: \(error?.localizedDescription)")
+do {
+    try keychain.remove("kishikawakatsumi")
+} catch let error {
     // Error handling if needed...
 }
 ```
@@ -405,7 +373,7 @@ let keychain = Keychain(server: "https://www.kishikawakatsumi.com", protocolType
 let username = "kishikawakatsumi@mac.com"
 
 // First, check the credential in the app's Keychain
-if let password = keychain.get(username) {
+if let password = try? keychain.get(username) {
     // If found password in the Keychain,
     // then log into the server
 } else {
@@ -467,7 +435,7 @@ let password = Keychain.generatePassword() // => Nhu-GKm-s3n-pMx
 
 ```swift
 let keychain = Keychain(server: "https://github.com", protocolType: .HTTPS)
-println("\(keychain)")
+print("\(keychain)")
 ```
 
 ```
@@ -486,7 +454,7 @@ let keychain = Keychain(server: "https://github.com", protocolType: .HTTPS)
 
 let keys = keychain.allKeys()
 for key in keys {
-  println("key: \(key)")
+  print("key: \(key)")
 }
 ```
 
@@ -504,7 +472,7 @@ let keychain = Keychain(server: "https://github.com", protocolType: .HTTPS)
 
 let items = keychain.allItems()
 for item in items {
-  println("item: \(item)")
+  print("item: \(item)")
 }
 ```
 
@@ -525,12 +493,12 @@ OS X 10.9 or later
 ### CocoaPods
 
 KeychainAccess is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+it, simply add the following lines to your Podfile:
 
-`pod 'KeychainAccess'`
-
-*Currently, to install the framework via CocoaPods you need to use pre-release version.*  
-See ["Pod Authors Guide to CocoaPods Frameworks"](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/)
+```ruby
+use_frameworks!
+pod 'KeychainAccess'
+```
 
 ### Carthage
 

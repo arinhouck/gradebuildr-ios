@@ -7,9 +7,11 @@
 //
 
 import UIKit
-
+import KeychainAccess
 
 class DashboardController: UIViewController {
+    
+    let keychain = Keychain(service: "com.gradebuildr.user-token")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,4 +21,20 @@ class DashboardController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func logout(sender: AnyObject) {
+        
+        do {
+            try keychain.remove("user-token")
+        } catch let error {
+            print("error: \(error)")
+            return
+        }
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey("userLoggedIn")
+        
+        self.performSegueWithIdentifier("root", sender: nil)
+    }
+        
 }
