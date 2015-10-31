@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import KeychainAccess
 
 class SettingsTableViewController: UITableViewController {
+    
+    let keychain = Keychain(service: "com.gradebuildr.user-token")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,27 @@ class SettingsTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 2
+    }
+    
+    override func tableView(tableView: UITableView,
+        didSelectRowAtIndexPath indexPath: NSIndexPath) {
+            if (indexPath.section == 1 && indexPath.row == 0) {
+                self.logout()
+                self.performSegueWithIdentifier("logout", sender: self)
+            }
+            
+    }
+    
+    private func logout() {
+        do {
+            try keychain.remove("user-token")
+        } catch let error {
+            print("error: \(error)")
+            return
+        }
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey("userLoggedIn")
     }
 
 //    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
