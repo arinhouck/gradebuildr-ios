@@ -1,23 +1,22 @@
 //
-//  TabBarController.swift
+//  CoursesViewController.swift
 //  gradebuildr
 //
-//  Created by Arin Houck on 10/24/15.
+//  Created by Arin Houck on 10/30/15.
 //  Copyright © 2015 Gradebuildr. All rights reserved.
 //
 
 import UIKit
 
-class TabBarController: UITabBarController {
+class CoursesViewController: UIViewController {
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let view = UIView(frame:
-            CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0)
-        )
-        view.backgroundColor = UIColor(red:0.00, green:0.66, blue:0.40, alpha:1.0)
-        
-        self.view.addSubview(view)
+
         // Do any additional setup after loading the view.
     }
 
