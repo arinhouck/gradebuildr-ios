@@ -12,8 +12,6 @@ import Alamofire
 import SwiftyJSON
 import KeychainAccess
 
-let API_URL = "https://www.gradebuildr.com/"
-
 class LoginController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var email: UITextField!
@@ -73,7 +71,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         
         Alamofire.request(
             .POST,
-            API_URL + "users/sign_in",
+            API_URL + "/users/sign_in",
             parameters: ["user":
                 ["email": email.text!, "password": password.text!]
             ],

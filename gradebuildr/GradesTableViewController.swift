@@ -1,17 +1,14 @@
 //
-//  SettingsViewController.swift
+//  GradesTableViewController.swift
 //  gradebuildr
 //
-//  Created by Arin Houck on 10/30/15.
+//  Created by Arin Houck on 11/14/15.
 //  Copyright © 2015 Gradebuildr. All rights reserved.
 //
 
 import UIKit
-import KeychainAccess
 
-class SettingsTableViewController: UITableViewController {
-    
-    let keychain = Keychain(service: "com.gradebuildr.user-token")
+class GradesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,38 +28,13 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 2
-    }
-    
-    override func tableView(tableView: UITableView,
-        didSelectRowAtIndexPath indexPath: NSIndexPath) {
-            
-            if (indexPath.section == 0 && indexPath.row == 0) {
-                self.performSegueWithIdentifier("editProfile", sender: self)
-            } else if (indexPath.section == 1 && indexPath.row == 0) {
-                self.logout()
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            
-    }
-    
-    private func logout() {
-        do {
-            try keychain.remove("user-token")
-        } catch let error {
-            print("error: \(error)")
-            return
-        }
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey("userLoggedIn")
+        return 1
     }
 
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        return 4
-//    }
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 0
+    }
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

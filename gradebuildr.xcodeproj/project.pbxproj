@@ -13,6 +13,7 @@
 		F769CE4E1B8B11690092F8C6 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E1C5E61B8A64EF00D8397B /* LoginController.swift */; };
 		F769CE4F1B8B11740092F8C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7086B811B8A24C7000FEB16 /* Main.storyboard */; };
 		F7B774EC1BDCA33F0099FFB4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B774EB1BDCA33F0099FFB4 /* TabBarController.swift */; };
+		F7C938C01BF8591D007523AB /* GradesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C938BF1BF8591D007523AB /* GradesTableViewController.swift */; };
 		F7F3EA7B1BE4773400F6EA27 /* GradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F3EA7A1BE4773400F6EA27 /* GradesViewController.swift */; };
 		F7F3EA7D1BE4779900F6EA27 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F3EA7C1BE4779900F6EA27 /* CoursesViewController.swift */; };
 		F7F3EA811BE47C9A00F6EA27 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F3EA801BE47C9A00F6EA27 /* SettingsTableViewController.swift */; };
@@ -48,6 +49,7 @@
 		F76ECB241BB90A86004E0C00 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = "Pods/../build/Debug-iphoneos/KeychainAccess.framework"; sourceTree = "<group>"; };
 		F7B774EB1BDCA33F0099FFB4 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F7BCF5C11B912F8F00589DF6 /* test.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = test.playground; sourceTree = "<group>"; };
+		F7C938BF1BF8591D007523AB /* GradesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesTableViewController.swift; sourceTree = "<group>"; };
 		F7E1C5E61B8A64EF00D8397B /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		F7F3EA7A1BE4773400F6EA27 /* GradesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesViewController.swift; sourceTree = "<group>"; };
 		F7F3EA7C1BE4779900F6EA27 /* CoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
@@ -121,17 +123,18 @@
 				F7086B7D1B8A24C7000FEB16 /* AppDelegate.swift */,
 				F7F4073B1B8B1ADF00934994 /* DashboardController.swift */,
 				F7F4073D1B8B1D9000934994 /* HomeController.swift */,
-				F7BCF5C11B912F8F00589DF6 /* test.playground */,
 				F7E1C5E61B8A64EF00D8397B /* LoginController.swift */,
-				F7086B811B8A24C7000FEB16 /* Main.storyboard */,
-				F7086B841B8A24C7000FEB16 /* Images.xcassets */,
-				F7086B7B1B8A24C7000FEB16 /* Supporting Files */,
 				F7B774EB1BDCA33F0099FFB4 /* TabBarController.swift */,
 				F7F3EA7A1BE4773400F6EA27 /* GradesViewController.swift */,
 				F7F3EA7C1BE4779900F6EA27 /* CoursesViewController.swift */,
 				F7F3EA801BE47C9A00F6EA27 /* SettingsTableViewController.swift */,
 				F7F3EA821BE47E9100F6EA27 /* SettingsViewController.swift */,
 				F7F3EA841BE488B500F6EA27 /* EditProfileViewController.swift */,
+				F7086B811B8A24C7000FEB16 /* Main.storyboard */,
+				F7086B841B8A24C7000FEB16 /* Images.xcassets */,
+				F7BCF5C11B912F8F00589DF6 /* test.playground */,
+				F7086B7B1B8A24C7000FEB16 /* Supporting Files */,
+				F7C938BF1BF8591D007523AB /* GradesTableViewController.swift */,
 			);
 			path = gradebuildr;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7C938C01BF8591D007523AB /* GradesTableViewController.swift in Sources */,
 				F7F3EA7B1BE4773400F6EA27 /* GradesViewController.swift in Sources */,
 				F7F3EA7D1BE4779900F6EA27 /* CoursesViewController.swift in Sources */,
 				F769CE4E1B8B11690092F8C6 /* LoginController.swift in Sources */,
