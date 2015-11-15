@@ -106,7 +106,9 @@ class LoginController: UIViewController, UITextFieldDelegate {
         
         if let dataFromString = jsonResponse.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
             let json = JSON(data: dataFromString)
+            
             keychain[string: "user-token"] = json["token"].string
+            keychain[string: "user-id"] = json["id"].stringValue
         }
     }
     
@@ -118,7 +120,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
     }
     
     private func alert(title: String, message: String, buttonText: String) {
-        var alertView = UIAlertView();
+        let alertView = UIAlertView();
         alertView.title = title
         alertView.message = message
         alertView.addButtonWithTitle(buttonText)

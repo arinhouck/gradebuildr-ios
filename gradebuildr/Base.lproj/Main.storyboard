@@ -128,12 +128,22 @@
                                     <navigationItem title="Grades" id="S2x-f2-dyY"/>
                                 </items>
                             </navigationBar>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hGb-8y-NAZ">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <connections>
+                                    <segue destination="hNI-ij-DJs" kind="embed" id="jPH-8P-SI9"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Plv-aP-2wP" firstAttribute="top" secondItem="nMa-Gy-Z1k" secondAttribute="bottom" id="Sz5-GV-YyL"/>
-                            <constraint firstItem="Plv-aP-2wP" firstAttribute="leading" secondItem="RbL-bw-YZ3" secondAttribute="leading" id="ZJD-F4-jzF"/>
-                            <constraint firstAttribute="trailing" secondItem="Plv-aP-2wP" secondAttribute="trailing" id="pH0-18-POa"/>
+                            <constraint firstItem="Plv-aP-2wP" firstAttribute="top" secondItem="nMa-Gy-Z1k" secondAttribute="bottom" id="3tJ-Hc-Rro"/>
+                            <constraint firstItem="hGb-8y-NAZ" firstAttribute="leading" secondItem="Plv-aP-2wP" secondAttribute="leading" id="8zX-lk-pAV"/>
+                            <constraint firstItem="Plv-aP-2wP" firstAttribute="leading" secondItem="RbL-bw-YZ3" secondAttribute="leading" id="XUr-9R-m03"/>
+                            <constraint firstItem="hGb-8y-NAZ" firstAttribute="bottom" secondItem="xQu-5N-jOV" secondAttribute="top" id="fpQ-oc-G5Y"/>
+                            <constraint firstItem="hGb-8y-NAZ" firstAttribute="top" secondItem="Plv-aP-2wP" secondAttribute="bottom" id="unb-Gh-bMw"/>
+                            <constraint firstAttribute="trailing" secondItem="hGb-8y-NAZ" secondAttribute="trailing" id="vUH-Pq-xeZ"/>
+                            <constraint firstItem="Plv-aP-2wP" firstAttribute="trailing" secondItem="hGb-8y-NAZ" secondAttribute="trailing" id="yYo-Ro-st1"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Grades" image="grades" id="IvL-qM-BsA"/>
@@ -583,6 +593,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JW5-eW-Fsq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1226" y="520"/>
+        </scene>
+        <!--Grades Table View Controller-->
+        <scene sceneID="DIO-Y6-R4o">
+            <objects>
+                <tableViewController id="hNI-ij-DJs" customClass="GradesTableViewController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="c00-RB-waj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="gradeCell" id="CU7-UK-4q6" userLabel="Grade Cell">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CU7-UK-4q6" id="YoO-g8-X0L">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hNI-ij-DJs" id="5nP-Ol-H26"/>
+                            <outlet property="delegate" destination="hNI-ij-DJs" id="t6V-gN-WyR"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="gradesTableView" destination="c00-RB-waj" id="bAa-Cm-d5c"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f9J-bO-Mk6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-45" y="2161.5"/>
         </scene>
     </scenes>
     <resources>

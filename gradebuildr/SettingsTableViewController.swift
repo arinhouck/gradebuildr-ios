@@ -27,6 +27,7 @@ class SettingsTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
     // MARK: - Table view data source
 
@@ -50,6 +51,7 @@ class SettingsTableViewController: UITableViewController {
     private func logout() {
         do {
             try keychain.remove("user-token")
+            try keychain.remove("user-id")
         } catch let error {
             print("error: \(error)")
             return
