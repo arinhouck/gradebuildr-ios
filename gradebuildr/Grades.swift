@@ -7,9 +7,72 @@
 //
 
 import Foundation
+import KeychainAccess
 import SwiftyJSON
+import Alamofire
 class Grades {
     var rows: [Grade] = []
+    
+    enum Router: URLRequestConvertible {
+        static let baseURLString = API_URL
+        static var token: String?
+        
+        case CreateGrade([String: AnyObject])
+        case ReadGrade([String: AnyObject])
+        case UpdateGrade(String, [String: AnyObject])
+        case DestroyGrade(String)
+        
+        var method: Alamofire.Method {
+            switch self {
+            case .CreateGrade:
+                return .POST
+            case .ReadGrade:
+                return .GET
+            case .UpdateGrade:
+                return .PUT
+            case .DestroyGrade:
+                return .DELETE
+            }
+        }
+        
+        var path: String {
+            switch self {
+            case .CreateGrade:
+                return "/grades"
+            case .ReadGrade:
+                return "/grades"
+            case .UpdateGrade(let id, _):
+                return "/grades/\(id)"
+            case .DestroyGrade(let id):
+                return "/grades/\(id)"
+            }
+        }
+        
+        // MARK: URLRequestConvertible
+        
+        var URLRequest: NSMutableURLRequest {
+            let URL = NSURL(string: Router.baseURLString)!
+            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+            mutableURLRequest.HTTPMethod = method.rawValue
+            
+            mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            if let token = Router.token {
+                mutableURLRequest.setValue("Token token=\(token)", forHTTPHeaderField: "Authorization")
+            }
+            
+            switch self {
+            case .CreateGrade(let parameters):
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            case .ReadGrade(let parameters):
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+            case .UpdateGrade(_, let parameters):
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+            default:
+                return mutableURLRequest
+            }
+        }
+    }
     
 }
 
