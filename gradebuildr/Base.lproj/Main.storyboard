@@ -176,12 +176,22 @@
                                     <navigationItem title="Courses" id="AdP-AQ-Tc8"/>
                                 </items>
                             </navigationBar>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyE-9B-hoP">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <connections>
+                                    <segue destination="K1A-ri-jtN" kind="embed" id="61j-9G-wzY"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="VNm-Hy-pZU" secondAttribute="trailing" id="Ffv-qX-cRs"/>
                             <constraint firstItem="VNm-Hy-pZU" firstAttribute="leading" secondItem="ZJU-cR-ozM" secondAttribute="leading" id="GUi-bA-guZ"/>
+                            <constraint firstItem="hyE-9B-hoP" firstAttribute="top" secondItem="VNm-Hy-pZU" secondAttribute="bottom" id="L7e-vV-25Q"/>
+                            <constraint firstItem="hyE-9B-hoP" firstAttribute="leading" secondItem="VNm-Hy-pZU" secondAttribute="leading" id="LQb-Dl-RjI"/>
                             <constraint firstItem="VNm-Hy-pZU" firstAttribute="top" secondItem="eTf-u8-EjW" secondAttribute="bottom" id="TE1-PO-97n"/>
+                            <constraint firstItem="hyE-9B-hoP" firstAttribute="bottom" secondItem="NMF-tC-AmT" secondAttribute="top" id="dK6-qh-kqu"/>
+                            <constraint firstItem="hyE-9B-hoP" firstAttribute="trailing" secondItem="VNm-Hy-pZU" secondAttribute="trailing" id="vfA-eE-unf"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Courses" image="courses" id="bAs-ZL-4VX"/>
@@ -189,6 +199,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r1I-Ka-o2u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="750" y="2092"/>
+        </scene>
+        <!--Courses Table View Controller-->
+        <scene sceneID="VY3-yD-IfX">
+            <objects>
+                <tableViewController id="K1A-ri-jtN" customClass="CoursesTableViewController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="m4A-a3-ndA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="courseCell" textLabel="MR2-mj-bbt" detailTextLabel="7qT-yR-N9h" style="IBUITableViewCellStyleSubtitle" id="siv-yt-CJQ" userLabel="Course Cell">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="siv-yt-CJQ" id="Knp-TV-gT7">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MR2-mj-bbt">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7qT-yR-N9h">
+                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="K1A-ri-jtN" id="bdR-Pe-PeT"/>
+                            <outlet property="delegate" destination="K1A-ri-jtN" id="Cmo-d6-Y3H"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="coursesTableView" destination="m4A-a3-ndA" id="raz-3v-qdN"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iWS-Tk-pfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1138" y="2228.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="eLF-pW-z0K">
