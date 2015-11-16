@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3FFDF1FA41803B3D4EFF57B6 /* Pods_gradebuildr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087FE460E0F2B654EDB2CA8D /* Pods_gradebuildr.framework */; };
 		F7086B941B8A24C7000FEB16 /* gradebuildrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7086B931B8A24C7000FEB16 /* gradebuildrTests.swift */; };
+		F73299DB1BF9B990009FBC5F /* Courses.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73299DA1BF9B990009FBC5F /* Courses.swift */; };
+		F73299DD1BF9BC1B009FBC5F /* CoursesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73299DC1BF9BC1B009FBC5F /* CoursesTableViewController.swift */; };
 		F769CE4B1B8B115C0092F8C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7086B7D1B8A24C7000FEB16 /* AppDelegate.swift */; };
 		F769CE4E1B8B11690092F8C6 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E1C5E61B8A64EF00D8397B /* LoginController.swift */; };
 		F769CE4F1B8B11740092F8C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7086B811B8A24C7000FEB16 /* Main.storyboard */; };
@@ -47,6 +49,8 @@
 		F7086B8D1B8A24C7000FEB16 /* gradebuildrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gradebuildrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7086B921B8A24C7000FEB16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7086B931B8A24C7000FEB16 /* gradebuildrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gradebuildrTests.swift; sourceTree = "<group>"; };
+		F73299DA1BF9B990009FBC5F /* Courses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Courses.swift; sourceTree = "<group>"; };
+		F73299DC1BF9BC1B009FBC5F /* CoursesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoursesTableViewController.swift; sourceTree = "<group>"; };
 		F76ECB241BB90A86004E0C00 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = "Pods/../build/Debug-iphoneos/KeychainAccess.framework"; sourceTree = "<group>"; };
 		F7B774EB1BDCA33F0099FFB4 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F7BCF5C11B912F8F00589DF6 /* test.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = test.playground; sourceTree = "<group>"; };
@@ -133,11 +137,13 @@
 				F7F3EA821BE47E9100F6EA27 /* SettingsViewController.swift */,
 				F7F3EA841BE488B500F6EA27 /* EditProfileViewController.swift */,
 				F7086B811B8A24C7000FEB16 /* Main.storyboard */,
-				F7086B841B8A24C7000FEB16 /* Images.xcassets */,
-				F7BCF5C11B912F8F00589DF6 /* test.playground */,
-				F7086B7B1B8A24C7000FEB16 /* Supporting Files */,
+				F73299DC1BF9BC1B009FBC5F /* CoursesTableViewController.swift */,
 				F7C938BF1BF8591D007523AB /* GradesTableViewController.swift */,
 				F7C938C11BF85AFB007523AB /* Grades.swift */,
+				F73299DA1BF9B990009FBC5F /* Courses.swift */,
+				F7BCF5C11B912F8F00589DF6 /* test.playground */,
+				F7086B841B8A24C7000FEB16 /* Images.xcassets */,
+				F7086B7B1B8A24C7000FEB16 /* Supporting Files */,
 			);
 			path = gradebuildr;
 			sourceTree = "<group>";
@@ -321,6 +327,7 @@
 			files = (
 				F7C938C01BF8591D007523AB /* GradesTableViewController.swift in Sources */,
 				F7F3EA7B1BE4773400F6EA27 /* GradesViewController.swift in Sources */,
+				F73299DB1BF9B990009FBC5F /* Courses.swift in Sources */,
 				F7F3EA7D1BE4779900F6EA27 /* CoursesViewController.swift in Sources */,
 				F769CE4E1B8B11690092F8C6 /* LoginController.swift in Sources */,
 				F769CE4B1B8B115C0092F8C6 /* AppDelegate.swift in Sources */,
@@ -330,6 +337,7 @@
 				F7B774EC1BDCA33F0099FFB4 /* TabBarController.swift in Sources */,
 				F7F3EA811BE47C9A00F6EA27 /* SettingsTableViewController.swift in Sources */,
 				F7F3EA851BE488B500F6EA27 /* EditProfileViewController.swift in Sources */,
+				F73299DD1BF9BC1B009FBC5F /* CoursesTableViewController.swift in Sources */,
 				F7F3EA831BE47E9100F6EA27 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
