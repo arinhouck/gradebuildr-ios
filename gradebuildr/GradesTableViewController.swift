@@ -21,7 +21,15 @@ class GradesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         gradesTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        loadGrades()
+        
+        self.refreshControl = UIRefreshControl()
+        
+        // set up the refresh control
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        gradesTableView.addSubview(refreshControl!)
+        
+        self.loadGrades()
         
 
         // Uncomment the following line to preserve selection between presentations
@@ -29,6 +37,11 @@ class GradesTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func refresh(sender:AnyObject) {
+        grades.rows.removeAll()
+        self.loadGrades()
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,7 +68,7 @@ class GradesTableViewController: UITableViewController {
         cell.detailTextLabel?.text = ratio
         
         if indexPath.row % 2 == 0 {
-            cell.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0) // very light gray
+            cell.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
         } else {
             cell.backgroundColor = UIColor.whiteColor()
         }
@@ -125,6 +138,11 @@ class GradesTableViewController: UITableViewController {
                         for grade in json["grades"].arrayValue {
                             self.grades.rows.append(Grade(grade: grade))
                         }
+                    }
+                    
+                    if self.refreshControl!.refreshing
+                    {
+                        self.refreshControl?.endRefreshing()
                     }
                     
                     self.reloadTableView()
