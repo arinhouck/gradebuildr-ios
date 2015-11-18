@@ -31,6 +31,8 @@ class GradesTableViewController: UITableViewController {
         
         self.loadGrades()
         
+        gradesTableView.backgroundColor = UIColor(patternImage: UIImage(named: "empty-cell.png")!)
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -156,6 +158,8 @@ class GradesTableViewController: UITableViewController {
     private func reloadTableView() {
         dispatch_async(dispatch_get_main_queue(), {
             self.gradesTableView.reloadData()
+            self.gradesTableView.backgroundColor = UIColor.whiteColor()
+            
             return
         })
     }
