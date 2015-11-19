@@ -7,11 +7,31 @@
 //
 
 import UIKit
+import KeychainAccess
+import SwiftyJSON
+import Alamofire
 
 class EditProfileViewController: UIViewController {
     
+    var user: User?
+    let keychain = Keychain(service: "com.gradebuildr.user-token")
+    
+    
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var gradePointsTextField: UITextField!
+    @IBOutlet weak var gradeUnitsTextField: UITextField!
+    
+    @IBOutlet weak var semesterPickerView: UIPickerView!
+    @IBOutlet weak var emailTextField: UITextField!
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
     }
 
     override func viewDidLoad() {
@@ -23,11 +43,76 @@ class EditProfileViewController: UIViewController {
         fixItView.backgroundColor = UIColor(red:0.00, green:0.66, blue:0.40, alpha:1.0)
         view.addSubview( fixItView )
         
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        User.Router.token = keychain["user-token"]
+        
+        _ = Alamofire.request(User.Router.ReadUser(["id": keychain["user-id"]!]))
+            .responseJSON(completionHandler: { response in
+                switch response.result {
+                case .Success:
+                    if let value = response.result.value {
+                        let json: JSON = JSON(value)
+                        let u: JSON = json["user"]
+                        self.user = User(user: u)
+                    }
+                    
+                    self.loadUser()
+                case .Failure(let error):
+                    print(error)
+                }
+            })
+    }
+    
+    private func loadUser() {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.firstNameTextField.becomeFirstResponder()
+            self.firstNameTextField.text = self.user?.getFirstName()
+            self.lastNameTextField.text = self.user?.getLastName()
+            self.gradePointsTextField.text = "\(self.user!.getGradePoints())"
+            self.gradeUnitsTextField.text = "\(self.user!.getGradeUnits())"
+            
+            self.emailTextField.text = self.user?.getEmail()
+            return
+        })
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @IBAction func save(sender: AnyObject) {
+        
+        User.Router.token = keychain["user-token"]
+        
+        let params = [
+            User.UserFields.FirstName.rawValue: firstNameTextField.text!,
+            User.UserFields.LastName.rawValue: lastNameTextField.text!,
+            User.UserFields.GradePoints.rawValue: gradePointsTextField.text!,
+            User.UserFields.GradeUnits.rawValue: gradeUnitsTextField.text!,
+            User.UserFields.Email.rawValue: emailTextField.text!
+        ]
+        
+        let update = [
+            "id": keychain["user-id"]!,
+            "user" : params
+        ]
+        
+        _ = Alamofire.request(User.Router.UpdateUser(update))
+            .responseJSON(completionHandler: { response in
+                switch response.result {
+                case .Success:
+                    print("Successfully updated user.")
+                    self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                case .Failure(let error):
+                    print(error)
+                }
+            })
+        
     }
     
     @IBAction func cancel(sender: AnyObject) {

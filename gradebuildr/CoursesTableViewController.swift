@@ -30,6 +30,8 @@ class CoursesTableViewController: UITableViewController {
         
         self.loadCourses()
         
+        coursesTableView.backgroundColor = UIColor(patternImage: UIImage(named: "empty-cell.png")!)
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -154,6 +156,7 @@ class CoursesTableViewController: UITableViewController {
     private func reloadTableView() {
         dispatch_async(dispatch_get_main_queue(), {
             self.coursesTableView.reloadData()
+            self.coursesTableView.backgroundColor = UIColor.whiteColor()
             return
         })
     }
