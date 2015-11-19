@@ -168,4 +168,24 @@ class User
         return gradeUnits
     }
     
+    internal func getGradeCount() -> Int
+    {
+        return gradeCount
+    }
+    
+    internal func getCourseCount() -> Int
+    {
+        return courseCount
+    }
+    
+    internal func getSemesterGpa() -> Float
+    {
+        return semesterGpa
+    }
+    
+    internal func getCumulativeGpa() -> Float
+    {
+        return cumulativeGpa
+    }
+    
 }
