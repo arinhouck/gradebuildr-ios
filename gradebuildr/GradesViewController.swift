@@ -16,6 +16,12 @@ class GradesViewController: UIViewController {
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        self.navigationController?.navigationBar.topItem?.title = "Grades"
+    }
+    
     // var grades: Grades = Grades()
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -29,6 +29,12 @@ class DashboardController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        self.navigationController?.navigationBar.topItem?.title = "Dashboard"
     }
     
     override func viewDidAppear(animated: Bool) {

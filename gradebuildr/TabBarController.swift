@@ -9,6 +9,12 @@
 import UIKit
 
 class TabBarController: UITabBarController {
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        self.navigationController?.navigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: false)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

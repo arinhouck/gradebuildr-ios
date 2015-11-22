@@ -11,10 +11,14 @@ import UIKit
 class CourseDetailController: UIViewController {
     
     var course: Course?
-    @IBOutlet weak var navigationBar: UINavigationBar!
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        self.navigationController?.navigationBarHidden = false
     }
     
     override func viewDidLoad() {
@@ -25,7 +29,7 @@ class CourseDetailController: UIViewController {
         fixItView.backgroundColor = UIColor(red:0.00, green:0.66, blue:0.40, alpha:1.0)
         view.addSubview( fixItView )
         
-        navigationBar.topItem?.title = course!.getName()
+        self.title = course!.getName()
         // Do any additional setup after loading the view.
     }
 
