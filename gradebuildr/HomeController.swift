@@ -11,9 +11,9 @@ import UIKit
 
 class HomeController: UIViewController {
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return UIStatusBarStyle.LightContent
+//    }
     
     override func viewWillAppear(animated: Bool)
     {
