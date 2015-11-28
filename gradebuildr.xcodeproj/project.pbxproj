@@ -135,26 +135,11 @@
 			isa = PBXGroup;
 			children = (
 				F7086B7D1B8A24C7000FEB16 /* AppDelegate.swift */,
-				F7F4073D1B8B1D9000934994 /* HomeController.swift */,
-				F7E1C5E61B8A64EF00D8397B /* LoginController.swift */,
-				F7B774EB1BDCA33F0099FFB4 /* TabBarController.swift */,
-				F7F4073B1B8B1ADF00934994 /* DashboardController.swift */,
-				F7F3EA7A1BE4773400F6EA27 /* GradesViewController.swift */,
-				F7F3EA7C1BE4779900F6EA27 /* CoursesViewController.swift */,
-				F7F3EA801BE47C9A00F6EA27 /* SettingsTableViewController.swift */,
-				F7F3EA821BE47E9100F6EA27 /* SettingsViewController.swift */,
 				F7086B811B8A24C7000FEB16 /* Main.storyboard */,
-				F73299DC1BF9BC1B009FBC5F /* CoursesTableViewController.swift */,
-				F7D7A0AB1C0154E40062FB14 /* CourseDetailController.swift */,
-				F7D7A0AD1C0181B30062FB14 /* PieChartViewController.swift */,
-				F7C938BF1BF8591D007523AB /* GradesTableViewController.swift */,
-				F7F3EA841BE488B500F6EA27 /* EditProfileViewController.swift */,
-				F767C7281BFD46B700542E84 /* User.swift */,
-				F7C938C11BF85AFB007523AB /* Grades.swift */,
-				F73299DA1BF9B990009FBC5F /* Courses.swift */,
-				F7D7A0AF1C0195A90062FB14 /* Weights.swift */,
-				F7BCF5C11B912F8F00589DF6 /* test.playground */,
 				F7086B841B8A24C7000FEB16 /* Images.xcassets */,
+				F7BCF5C11B912F8F00589DF6 /* test.playground */,
+				F7D9C8331C0A180C000141AA /* Controllers */,
+				F7D9C8321C0A17FC000141AA /* Models */,
 				F7086B7B1B8A24C7000FEB16 /* Supporting Files */,
 			);
 			path = gradebuildr;
@@ -183,6 +168,37 @@
 				F7086B921B8A24C7000FEB16 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F7D9C8321C0A17FC000141AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F767C7281BFD46B700542E84 /* User.swift */,
+				F7C938C11BF85AFB007523AB /* Grades.swift */,
+				F73299DA1BF9B990009FBC5F /* Courses.swift */,
+				F7D7A0AF1C0195A90062FB14 /* Weights.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		F7D9C8331C0A180C000141AA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F7F4073D1B8B1D9000934994 /* HomeController.swift */,
+				F7E1C5E61B8A64EF00D8397B /* LoginController.swift */,
+				F7B774EB1BDCA33F0099FFB4 /* TabBarController.swift */,
+				F7F4073B1B8B1ADF00934994 /* DashboardController.swift */,
+				F7F3EA7A1BE4773400F6EA27 /* GradesViewController.swift */,
+				F7F3EA7C1BE4779900F6EA27 /* CoursesViewController.swift */,
+				F7F3EA801BE47C9A00F6EA27 /* SettingsTableViewController.swift */,
+				F7F3EA821BE47E9100F6EA27 /* SettingsViewController.swift */,
+				F73299DC1BF9BC1B009FBC5F /* CoursesTableViewController.swift */,
+				F7D7A0AB1C0154E40062FB14 /* CourseDetailController.swift */,
+				F7D7A0AD1C0181B30062FB14 /* PieChartViewController.swift */,
+				F7C938BF1BF8591D007523AB /* GradesTableViewController.swift */,
+				F7F3EA841BE488B500F6EA27 /* EditProfileViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
