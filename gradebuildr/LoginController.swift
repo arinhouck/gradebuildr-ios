@@ -84,7 +84,6 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 
                 if (response.response?.statusCode == 201) {
                     // Sucessful request
-                    self.alert("Login", message: "\(response)", buttonText: "Okay")
                     self.storeKeychain(response.result.value!)
                     self.updateUserLoggedInFlag()
                     self.performSegueWithIdentifier("dashboard", sender: nil)
