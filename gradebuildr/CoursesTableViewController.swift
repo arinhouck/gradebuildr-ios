@@ -123,6 +123,18 @@ class CoursesTableViewController: UITableViewController {
     }
     */
     
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "detailCourse" {
+                let cell = sender as! UITableViewCell
+                let indexPath = self.coursesTableView.indexPathForCell(cell)!
+                let destination: CourseDetailController =  segue.destinationViewController as! CourseDetailController
+                let row = courses.rows[indexPath.row]
+                destination.course = row
+        }
+        
+    }
+    
     
     let keychain = Keychain(service: "com.gradebuildr.user-token")
     
@@ -138,6 +150,7 @@ class CoursesTableViewController: UITableViewController {
                         for course in json["courses"].arrayValue {
                             self.courses.rows.append(Course(course: course))
                         }
+                        
                     }
                     
                     if self.refreshControl!.refreshing

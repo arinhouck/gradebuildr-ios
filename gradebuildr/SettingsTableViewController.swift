@@ -43,7 +43,7 @@ class SettingsTableViewController: UITableViewController {
                 self.performSegueWithIdentifier("editProfile", sender: self)
             } else if (indexPath.section == 1 && indexPath.row == 0) {
                 self.logout()
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.navigationController?.popToRootViewControllerAnimated(true)
             }
             
     }

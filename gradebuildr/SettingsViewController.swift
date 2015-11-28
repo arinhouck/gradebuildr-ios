@@ -10,13 +10,13 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override func viewWillAppear(animated: Bool)
+    {
+        self.navigationController?.navigationBar.topItem?.title = "Settings"
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 

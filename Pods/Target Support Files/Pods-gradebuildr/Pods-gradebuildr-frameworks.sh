@@ -85,11 +85,13 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-gradebuildr/Alamofire.framework"
+  install_framework "Pods-gradebuildr/Charts.framework"
   install_framework "Pods-gradebuildr/KeychainAccess.framework"
   install_framework "Pods-gradebuildr/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-gradebuildr/Alamofire.framework"
+  install_framework "Pods-gradebuildr/Charts.framework"
   install_framework "Pods-gradebuildr/KeychainAccess.framework"
   install_framework "Pods-gradebuildr/SwiftyJSON.framework"
 fi

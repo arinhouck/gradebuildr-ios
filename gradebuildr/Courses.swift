@@ -11,6 +11,14 @@ import KeychainAccess
 import SwiftyJSON
 import Alamofire
 
+extension Double {
+    /// Rounds the double to decimal places value
+    func roundToPlaces(places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return round(self * divisor) / divisor
+    }
+}
+
 class Courses {
     var rows: [Course] = []
     
@@ -84,11 +92,12 @@ class Course
     private var subject: String
     private var number: Int
     private var creditHours: Int
-    private var currentGrade: String
+    private var currentGrade: Double
     private var letterGrade: String
     private var gradingScale: String
     private var userId: Int
     private var createdAt: String
+    private var weightIds: [Int] = []
     
     enum CourseFields: String {
         case Id = "id"
@@ -100,6 +109,7 @@ class Course
         case GradingScale = "grading_scale"
         case UserId = "user_id"
         case CreatedAt = "created_at"
+        case WeightIds = "weight_ids"
     }
     
     required init (course: JSON)
@@ -108,11 +118,14 @@ class Course
         self.subject = course[CourseFields.Subject.rawValue].stringValue
         self.number = Int(course[CourseFields.Number.rawValue].stringValue)!
         self.creditHours = course[CourseFields.CreditHours.rawValue].int!
-        self.currentGrade = course[CourseFields.CurrentGrade.rawValue].stringValue
+        self.currentGrade = course[CourseFields.CurrentGrade.rawValue].doubleValue
         self.letterGrade = course[CourseFields.LetterGrade.rawValue].stringValue
         self.gradingScale = course[CourseFields.GradingScale.rawValue].stringValue
         self.userId = course[CourseFields.UserId.rawValue].int!
         self.createdAt = course[CourseFields.CreatedAt.rawValue].stringValue
+        for (_, value):(String, JSON) in course[CourseFields.WeightIds.rawValue] {
+            self.weightIds.append(value.int!)
+        }
     }
     
     internal func getName() -> String
@@ -120,14 +133,29 @@ class Course
         return subject + " \(number)"
     }
     
-    internal func getCurrentGrade() -> String
+    internal func getCurrentGrade() -> Double
     {
-        return currentGrade
+        return currentGrade.roundToPlaces(2)
     }
     
     internal func getLetterGrade() -> String
     {
         return letterGrade
+    }
+    
+    internal func getCreditHours() -> Int
+    {
+        return creditHours
+    }
+    
+    internal func getGradingScale() -> String
+    {
+        return gradingScale
+    }
+    
+    internal func getWeightIds() -> [Int]
+    {
+        return weightIds
     }
     
 }
