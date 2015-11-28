@@ -21,6 +21,7 @@
 		F7D7A0AC1C0154E40062FB14 /* CourseDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D7A0AB1C0154E40062FB14 /* CourseDetailController.swift */; };
 		F7D7A0AE1C0181B30062FB14 /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D7A0AD1C0181B30062FB14 /* PieChartViewController.swift */; };
 		F7D7A0B01C0195A90062FB14 /* Weights.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D7A0AF1C0195A90062FB14 /* Weights.swift */; };
+		F7D9C8351C0A199D000141AA /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9C8341C0A199D000141AA /* ChangePasswordViewController.swift */; };
 		F7F3EA7B1BE4773400F6EA27 /* GradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F3EA7A1BE4773400F6EA27 /* GradesViewController.swift */; };
 		F7F3EA7D1BE4779900F6EA27 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F3EA7C1BE4779900F6EA27 /* CoursesViewController.swift */; };
 		F7F3EA811BE47C9A00F6EA27 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F3EA801BE47C9A00F6EA27 /* SettingsTableViewController.swift */; };
@@ -64,6 +65,7 @@
 		F7D7A0AB1C0154E40062FB14 /* CourseDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailController.swift; sourceTree = "<group>"; };
 		F7D7A0AD1C0181B30062FB14 /* PieChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
 		F7D7A0AF1C0195A90062FB14 /* Weights.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weights.swift; sourceTree = "<group>"; };
+		F7D9C8341C0A199D000141AA /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		F7E1C5E61B8A64EF00D8397B /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		F7F3EA7A1BE4773400F6EA27 /* GradesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesViewController.swift; sourceTree = "<group>"; };
 		F7F3EA7C1BE4779900F6EA27 /* CoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				F7D7A0AD1C0181B30062FB14 /* PieChartViewController.swift */,
 				F7C938BF1BF8591D007523AB /* GradesTableViewController.swift */,
 				F7F3EA841BE488B500F6EA27 /* EditProfileViewController.swift */,
+				F7D9C8341C0A199D000141AA /* ChangePasswordViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				F7D7A0AE1C0181B30062FB14 /* PieChartViewController.swift in Sources */,
 				F73299DB1BF9B990009FBC5F /* Courses.swift in Sources */,
 				F7F3EA7D1BE4779900F6EA27 /* CoursesViewController.swift in Sources */,
+				F7D9C8351C0A199D000141AA /* ChangePasswordViewController.swift in Sources */,
 				F769CE4E1B8B11690092F8C6 /* LoginController.swift in Sources */,
 				F769CE4B1B8B115C0092F8C6 /* AppDelegate.swift in Sources */,
 				F7C938C21BF85AFB007523AB /* Grades.swift in Sources */,

@@ -106,13 +106,21 @@ class EditProfileViewController: UIViewController {
             .responseJSON(completionHandler: { response in
                 switch response.result {
                 case .Success:
-                    print("Successfully updated user.")
+                    self.alert("User", message: "Sucessfully updated profile.", buttonText: "Okay")
                     self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
                 case .Failure(let error):
                     print(error)
                 }
             })
         
+    }
+    
+    private func alert(title: String, message: String, buttonText: String) {
+        let alertView = UIAlertView();
+        alertView.title = title
+        alertView.message = message
+        alertView.addButtonWithTitle(buttonText)
+        alertView.show()
     }
     
     @IBAction func cancel(sender: AnyObject) {

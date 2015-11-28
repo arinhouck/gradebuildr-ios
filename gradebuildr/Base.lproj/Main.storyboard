@@ -108,7 +108,6 @@
         <!--Grades-->
         <scene sceneID="Qwn-dd-PIT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gaI-JP-dHW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="QmH-0n-ZoA" customClass="GradesViewController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nMa-Gy-Z1k"/>
@@ -135,6 +134,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Grades" image="grades" id="IvL-qM-BsA"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gaI-JP-dHW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="372" y="2092"/>
         </scene>
@@ -224,7 +224,6 @@
         <!--Course Detail Controller-->
         <scene sceneID="jQH-Lt-FQ4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4vJ-5U-9ce" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ev6-jt-qr5" customClass="CourseDetailController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5xG-gj-UIn"/>
@@ -323,6 +322,7 @@
                         <outlet property="gradingScaleLabel" destination="bJg-4N-eo0" id="m9i-mp-f5j"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4vJ-5U-9ce" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1645" y="2080.5"/>
         </scene>
@@ -355,7 +355,6 @@
         <!--Dashboard-->
         <scene sceneID="2nh-oW-SC5">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LPw-dH-3dP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ZCu-qa-KbO" customClass="DashboardController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="InG-I1-8bs"/>
@@ -509,6 +508,7 @@
                         <outlet property="semesterGpaLabel" destination="ROQ-8r-5xO" id="EMQ-b1-80V"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LPw-dH-3dP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="618" y="1288"/>
         </scene>
@@ -639,6 +639,7 @@
                     <navigationItem key="navigationItem" id="evm-cY-Fza"/>
                     <connections>
                         <segue destination="OwS-Vo-gin" kind="modal" identifier="editProfile" modalTransitionStyle="flipHorizontal" id="jzV-IZ-IGN"/>
+                        <segue destination="IzB-pU-RQq" kind="modal" identifier="changePassword" modalTransitionStyle="flipHorizontal" id="ceo-9S-Uhl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="boJ-OO-rxS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -801,6 +802,98 @@
             </objects>
             <point key="canvasLocation" x="1848" y="1410"/>
         </scene>
+        <!--Change Password View Controller-->
+        <scene sceneID="U0E-We-vRW">
+            <objects>
+                <viewController id="IzB-pU-RQq" customClass="ChangePasswordViewController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mDY-9N-B4f"/>
+                        <viewControllerLayoutGuide type="bottom" id="JJS-mL-mWb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FCw-rA-7bf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e9u-z3-Nwe">
+                                <rect key="frame" x="20" y="100" width="280" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGY-V5-aou">
+                                <rect key="frame" x="20" y="71" width="106" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="haL-Ze-Zz4"/>
+                                    <constraint firstAttribute="width" constant="106" id="lOa-EU-4LE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ytv-fl-8m2">
+                                <rect key="frame" x="20" y="192" width="280" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nd-o9-trp">
+                                <rect key="frame" x="20" y="163" width="131" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="131" id="Osv-Qs-NOG"/>
+                                    <constraint firstAttribute="height" constant="21" id="SKb-DA-OAI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K33-Dk-r52">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.65098039220000004" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="barTintColor" red="0.0" green="0.65098039220000004" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Change Password" id="MfY-cd-7Oy">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="S3d-Me-MxJ">
+                                            <connections>
+                                                <action selector="cancel:" destination="IzB-pU-RQq" id="gDE-RX-KT0"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="bcK-un-cz1">
+                                            <connections>
+                                                <action selector="save:" destination="IzB-pU-RQq" id="3Yi-mH-KZ2"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4nd-o9-trp" firstAttribute="top" secondItem="e9u-z3-Nwe" secondAttribute="bottom" constant="33" id="5Q1-8y-cZZ"/>
+                            <constraint firstAttribute="trailing" secondItem="K33-Dk-r52" secondAttribute="trailing" id="9Bp-FW-ca5"/>
+                            <constraint firstItem="TGY-V5-aou" firstAttribute="leading" secondItem="FCw-rA-7bf" secondAttribute="leadingMargin" constant="4" id="Cdq-Q9-QIM"/>
+                            <constraint firstItem="Ytv-fl-8m2" firstAttribute="leading" secondItem="4nd-o9-trp" secondAttribute="leading" id="EAF-eN-kdS"/>
+                            <constraint firstItem="e9u-z3-Nwe" firstAttribute="centerX" secondItem="K33-Dk-r52" secondAttribute="centerX" id="Ehu-Rp-9et"/>
+                            <constraint firstItem="Ytv-fl-8m2" firstAttribute="top" secondItem="4nd-o9-trp" secondAttribute="bottom" constant="8" symbolic="YES" id="HMU-ae-uxs"/>
+                            <constraint firstItem="e9u-z3-Nwe" firstAttribute="leading" secondItem="TGY-V5-aou" secondAttribute="leading" id="IBq-np-Rkd"/>
+                            <constraint firstItem="K33-Dk-r52" firstAttribute="top" secondItem="mDY-9N-B4f" secondAttribute="bottom" id="VV3-D5-9IM"/>
+                            <constraint firstItem="K33-Dk-r52" firstAttribute="leading" secondItem="FCw-rA-7bf" secondAttribute="leading" id="bOk-6U-8b1"/>
+                            <constraint firstItem="TGY-V5-aou" firstAttribute="top" secondItem="K33-Dk-r52" secondAttribute="bottom" constant="27" id="d1M-J9-e6S"/>
+                            <constraint firstItem="e9u-z3-Nwe" firstAttribute="leading" secondItem="4nd-o9-trp" secondAttribute="leading" id="fn6-qZ-KaL"/>
+                            <constraint firstItem="e9u-z3-Nwe" firstAttribute="top" secondItem="TGY-V5-aou" secondAttribute="bottom" constant="8" symbolic="YES" id="mLM-5N-eKN"/>
+                            <constraint firstItem="e9u-z3-Nwe" firstAttribute="trailing" secondItem="Ytv-fl-8m2" secondAttribute="trailing" id="wGU-si-ifj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="confirmPasswordTextField" destination="Ytv-fl-8m2" id="5AR-bY-x6I"/>
+                        <outlet property="newPasswordTextField" destination="e9u-z3-Nwe" id="Hw2-90-iM9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p7K-cy-zcF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2275" y="1221"/>
+        </scene>
         <!--Login-->
         <scene sceneID="Fv3-Sb-bHK">
             <objects>
@@ -815,6 +908,7 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eda-zx-UBX">
                                 <rect key="frame" x="48" y="318" width="225" height="50"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="TEj-lx-6MO"/>
                                 </constraints>
@@ -824,7 +918,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bfc-Uq-6ei">
                                 <rect key="frame" x="48" y="200" width="225" height="50"/>
-                                <color key="tintColor" white="1" alpha="0.73999999999999999" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lTl-8t-qdH"/>
                                 </constraints>
@@ -923,6 +1017,10 @@
         <scene sceneID="pqS-IY-c8O">
             <objects>
                 <viewController storyboardIdentifier="pieChart" id="J0v-GM-9bt" customClass="PieChartViewController" customModule="gradebuildr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fIJ-iQ-Xmz"/>
+                        <viewControllerLayoutGuide type="bottom" id="kgk-4A-Wkv"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lqh-Pc-lpd" customClass="PieChartView" customModule="Charts">
                         <rect key="frame" x="0.0" y="0.0" width="280" height="237"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
