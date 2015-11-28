@@ -11,6 +11,9 @@ import UIKit
 class CourseDetailController: UIViewController {
     
     var course: Course?
+    var weights: Weights = Weights()
+    
+    @IBOutlet weak var containerView: UIView!
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
@@ -21,6 +24,12 @@ class CourseDetailController: UIViewController {
         self.navigationController?.navigationBarHidden = false
     }
     
+    
+    @IBOutlet weak var currentLetterGradeLabel: UILabel!
+    @IBOutlet weak var creditHoursLabel: UILabel!
+    @IBOutlet weak var gradingScaleLabel: UILabel!
+    
+    @IBOutlet weak var currentGradeLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,24 +38,31 @@ class CourseDetailController: UIViewController {
         fixItView.backgroundColor = UIColor(red:0.00, green:0.66, blue:0.40, alpha:1.0)
         view.addSubview( fixItView )
         
-        self.title = course!.getName()
+        
+        self.title = course?.getName()
+        self.currentLetterGradeLabel.text = course?.getLetterGrade()
+        self.currentGradeLabel.text = "\(course!.getCurrentGrade()) %"
+        self.creditHoursLabel.text = "\(course!.getCreditHours())"
+        self.gradingScaleLabel.text = course?.getGradingScale()
         // Do any additional setup after loading the view.
     }
+
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "chart" {
+            let destination: PieChartViewController =  segue.destinationViewController as! PieChartViewController
+            destination.course = course
+        }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
 
 }

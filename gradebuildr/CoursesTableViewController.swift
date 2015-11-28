@@ -150,6 +150,7 @@ class CoursesTableViewController: UITableViewController {
                         for course in json["courses"].arrayValue {
                             self.courses.rows.append(Course(course: course))
                         }
+                        
                     }
                     
                     if self.refreshControl!.refreshing
