@@ -41,6 +41,8 @@ class SettingsTableViewController: UITableViewController {
             
             if (indexPath.section == 0 && indexPath.row == 0) {
                 self.performSegueWithIdentifier("editProfile", sender: self)
+            } else if (indexPath.section == 0 && indexPath.row == 1) {
+                self.performSegueWithIdentifier("changePassword", sender: self)
             } else if (indexPath.section == 1 && indexPath.row == 0) {
                 self.logout()
                 self.navigationController?.popToRootViewControllerAnimated(true)
