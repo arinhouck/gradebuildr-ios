@@ -14,7 +14,6 @@ import Alamofire
 class ChangePasswordViewController: UIViewController {
     let keychain = Keychain(service: "com.gradebuildr.user-token")
     
-    
     @IBOutlet weak var newPasswordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     
@@ -35,6 +34,9 @@ class ChangePasswordViewController: UIViewController {
         fixItView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 20);
         fixItView.backgroundColor = UIColor(red:0.00, green:0.66, blue:0.40, alpha:1.0)
         view.addSubview( fixItView )
+        
+        
+        self.newPasswordTextField.becomeFirstResponder()
         
         
     }
