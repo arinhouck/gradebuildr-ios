@@ -53,6 +53,9 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="signUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t2k-UV-Ljv"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Keep track of your entire academic curriculum" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbR-9j-0FO">
                                 <rect key="frame" x="32" y="255" width="256" height="138"/>

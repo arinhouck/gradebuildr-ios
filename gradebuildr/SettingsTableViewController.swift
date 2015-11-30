@@ -43,6 +43,8 @@ class SettingsTableViewController: UITableViewController {
                 self.performSegueWithIdentifier("editProfile", sender: self)
             } else if (indexPath.section == 0 && indexPath.row == 1) {
                 self.performSegueWithIdentifier("changePassword", sender: self)
+            } else if (indexPath.section == 0 && indexPath.row == 2) {
+                self.alert("Organizations", message: "Coming soon...", buttonText: "Okay")
             } else if (indexPath.section == 1 && indexPath.row == 0) {
                 self.logout()
                 self.navigationController?.popToRootViewControllerAnimated(true)
@@ -61,6 +63,15 @@ class SettingsTableViewController: UITableViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("userLoggedIn")
+    }
+    
+    
+    private func alert(title: String, message: String, buttonText: String) {
+        let alertView = UIAlertView();
+        alertView.title = title
+        alertView.message = message
+        alertView.addButtonWithTitle(buttonText)
+        alertView.show()
     }
 
 //    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -44,4 +44,16 @@ class HomeController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func signUp(sender: AnyObject) {
+        self.alert("Sign Up", message: "Coming soon...", buttonText: "Okay")
+    }
+    
+    private func alert(title: String, message: String, buttonText: String) {
+        let alertView = UIAlertView();
+        alertView.title = title
+        alertView.message = message
+        alertView.addButtonWithTitle(buttonText)
+        alertView.show()
+    }
 }
